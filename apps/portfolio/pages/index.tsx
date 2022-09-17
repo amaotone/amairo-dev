@@ -34,17 +34,28 @@ const Home: NextPage = () => {
         </Center>
         <Box>
           <Heading as="h2" mt={12} mb={6}>
-            About me
+            about me
           </Heading>
-          <Text>鈴木天音 Amane Suzuki</Text>
-          東京大学、東京大学大学院にてケモインフォマティクス（化学と機械学習の融合領域）を選考。
-          2019年、株式会社ディー・エヌ・エーに入社し機械学習や最適化のプロジェクトに携わる。
-          2022年、キャディ株式会社に入社し、AI
-          Labで機械学習プロジェクトの立ち上げなどに携わる。
+          <Text fontWeight={700}>鈴木天音 / Amane Suzuki</Text>
+          <Text>
+            東京大学、東京大学大学院にてケモインフォマティクス（化学と機械学習の融合領域）を選考。
+          </Text>
+          <Text>
+            2019年、株式会社ディー・エヌ・エーに入社し機械学習や最適化のプロジェクトに携わる。
+          </Text>
+          <Text>
+            2022年、キャディ株式会社に入社し、AI
+            Labで機械学習プロジェクトの立ち上げやGoogle
+            Cloudを活用した機械学習基盤の開発などに携っている。
+          </Text>
+          <Text>
+            Kaggle Master。AtCoder 水色。
+            趣味は個人開発で、Reactをはじめとしたフロントエンド技術によく触る。
+          </Text>
         </Box>
         <Box>
           <Heading as="h2" mt={12} mb={6}>
-            Personal Projects
+            personal projects
           </Heading>
           <SimpleGrid columns={3} spacing={3}>
             <ProductCard
@@ -54,7 +65,7 @@ const Home: NextPage = () => {
               blog="https://amalog.hateblo.jp/entry/ichibunichie-dev"
               code="https://github.com/amaotone/ichibunichie"
               image="https://ichibunichie.com/og.jpg"
-              badges={["Next.js", "Firebase"]}
+              badges={["Next.js", "Tailwindcss", "Firebase"]}
             />
             <ProductCard
               title="Among Us Note"

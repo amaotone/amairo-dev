@@ -28,7 +28,7 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
   const { title, text, link, blog, code, image, badges } = props;
   return (
     <LinkBox overflow={"hidden"} boxShadow={"base"}>
-      <Box>
+      <Box boxShadow="sm">
         <Image
           src={image || "https://via.placeholder.com/800x450.png"}
           alt="placeholder"

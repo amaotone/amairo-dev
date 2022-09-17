@@ -19,7 +19,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>amairo.dev</title>
-        <meta name="description" content="Amane Suzuki's portfolio website" />
+        <meta name="description" content="Amane Suzuki's personal website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container maxW="4xl" my={12} sx={blurAppearance}>
@@ -60,7 +60,7 @@ const Home: NextPage = () => {
           <SimpleGrid columns={3} spacing={3}>
             <ProductCard
               title="一文一会"
-              text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れて制作しました。"
+              text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れてつくりました。"
               link="https://ichibunichie.com"
               blog="https://amalog.hateblo.jp/entry/ichibunichie-dev"
               code="https://github.com/amaotone/ichibunichie"
@@ -69,12 +69,19 @@ const Home: NextPage = () => {
             />
             <ProductCard
               title="Among Us Note"
-              text="Among Usの盤面精査をするツールです。毎日のように遊んでいたときに作りました。"
+              text="Among Usの盤面精査をするツールです。毎日のように遊んでいたときにつくりました。"
               link="https://aunote.site"
               blog="https://amalog.hateblo.jp/entry/among-us-note-dev"
               code="https://github.com/amaotone/among-us-note"
               image="https://aunote.site/ogp.png"
               badges={["Next.js"]}
+            />
+            <ProductCard
+              title="amairo.dev"
+              text="このwebサイトです。ChakraUIとCSSアニメーションを勉強するためにつくりました。"
+              link="https://amairo.dev"
+              image="/og.jpg"
+              badges={["Next.js", "ChakraUI"]}
             />
           </SimpleGrid>
         </Box>

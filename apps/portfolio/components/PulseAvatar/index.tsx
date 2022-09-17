@@ -50,6 +50,8 @@ export const PulseAvatar: React.FC<Props> = (props: Props) => {
           size="full"
           position="absolute"
           top={0}
+          loading="eager"
+          ignoreFallback
         />
       </Box>
     </>

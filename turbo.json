@@ -5,6 +5,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "portfolio#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**"]
+    },
     "lint": {
       "outputs": []
     },

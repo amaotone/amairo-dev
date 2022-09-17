@@ -10,14 +10,19 @@ const theme = extendTheme({
     body: "'M PLUS Rounded 1c', sans-serif",
   },
   components: {
+    Component: {
+      zIndex: 1,
+    },
     Heading: {
       baseStyle: {
+        zIndex: 1,
         color: "gray.700",
         letterSpacing: 1.2,
       },
     },
     Text: {
       baseStyle: {
+        zIndex: 1,
         color: "gray.700",
         letterSpacing: 1.05,
         lineHeight: 1.5,

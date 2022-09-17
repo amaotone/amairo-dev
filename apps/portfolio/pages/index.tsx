@@ -9,12 +9,18 @@ import {
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useCallback } from "react";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import { Engine } from "tsparticles-engine";
 import { blurAppearance } from "../components/blurAppearance";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
 import { SocialIcons } from "../components/SocialIcons";
-
 const Home: NextPage = () => {
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadFull(engine);
+  }, []);
   return (
     <>
       <Head>
@@ -23,6 +29,40 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container maxW="4xl" my={12} sx={blurAppearance}>
+        <Particles
+          init={particlesInit}
+          options={{
+            detectRetina: true,
+            fpsLimit: 120,
+            particles: {
+              size: { value: 2, random: true, anim: { enable: true } },
+              color: {
+                value: "#cccccc",
+              },
+              opacity: {
+                value: 0.4,
+                anim: {
+                  enable: true,
+                },
+              },
+              line_linked: {
+                color: "#cccccc",
+                distance: 150,
+                enable: true,
+                opacity: 0.4,
+                width: 1,
+              },
+              move: {
+                enable: true,
+              },
+            },
+          }}
+          style={{
+            position: "fixed",
+            zIndex: -1,
+          }}
+        />
+
         <Center>
           <VStack direction={"column"} spacing={6}>
             <PulseAvatar src="/profile.jpg" bgColor="teal" size="120px" />

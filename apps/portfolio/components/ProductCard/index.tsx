@@ -27,7 +27,7 @@ interface Props {
 export const ProductCard: React.FC<Props> = (props: Props) => {
   const { title, text, link, blog, code, image, badges } = props;
   return (
-    <LinkBox boxShadow={"base"}>
+    <LinkBox boxShadow={"base"} bg="white">
       <Box boxShadow="sm">
         <Image
           src={image || "https://via.placeholder.com/800x450.png"}

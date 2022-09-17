@@ -1,8 +1,8 @@
 import { Avatar, Box, keyframes } from "@chakra-ui/react";
 
 interface Props {
-  name?: string;
-  src?: string;
+  name: string;
+  src: string;
   bgColor: string;
   size: string;
 }

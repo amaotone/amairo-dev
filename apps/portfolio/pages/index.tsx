@@ -18,11 +18,12 @@ import Head from "next/head";
 import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import { Engine } from "tsparticles-engine";
+import type { Engine } from "tsparticles-engine";
 import { blurAppearance } from "../components/blurAppearance";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
 import { SocialIcons } from "../components/SocialIcons";
+
 const Home: NextPage = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
@@ -71,7 +72,12 @@ const Home: NextPage = () => {
 
         <Center>
           <VStack direction={"column"} spacing={6}>
-            <PulseAvatar src="/profile.jpg" bgColor="teal" size="120px" />
+            <PulseAvatar
+              name="Amane Suzuki"
+              src="/profile.jpg"
+              bgColor="teal"
+              size="120px"
+            />
             <Heading as="h1" size="2xl" m={3}>
               amairo.dev
             </Heading>

@@ -1,11 +1,9 @@
 {
-  "name": "tsconfig",
+  "name": "@amairo-dev/tsconfig",
   "version": "0.0.0",
   "private": true,
-  "main": "index.js",
-  "files": [
-    "base.json",
-    "nextjs.json",
-    "react-library.json"
-  ]
+  "dependencies": {
+    "@tsconfig/next": "^1.0.2",
+    "@tsconfig/node16-strictest": "^1.0.3"
+  }
 }

@@ -9,7 +9,6 @@ import {
 
 interface Props {
   fontSize?: string;
-  isRound?: boolean;
   variant?: string;
   colorScheme?: string;
 }
@@ -20,50 +19,50 @@ export const SocialIcons: React.FC<Props> = (props: Props) => {
       <Link href="https://twitter.com/SakuEji" isExternal>
         <IconButton
           aria-label="logo-twitter"
-          variant={props.variant}
-          colorScheme={props.colorScheme}
-          isRound={props.isRound}
-          fontSize={props.fontSize}
+          variant={props.variant ?? "ghost"}
+          colorScheme={props.colorScheme ?? "teal"}
+          isRound
+          fontSize={props.fontSize ?? "3xl"}
           icon={<Icon as={RiTwitterFill} />}
         />
       </Link>
       <Link href="https://github.com/amaotone" isExternal>
         <IconButton
           aria-label="logo-github"
-          variant={props.variant}
-          colorScheme={props.colorScheme}
-          isRound={props.isRound}
-          fontSize={props.fontSize}
+          variant={props.variant ?? "ghost"}
+          colorScheme={props.colorScheme ?? "teal"}
+          isRound
+          fontSize={props.fontSize ?? "3xl"}
           icon={<Icon as={RiGithubFill} />}
         />
       </Link>
       <Link href="https://amalog.hateblo.jp" isExternal>
         <IconButton
           aria-label="logo-blog"
-          variant={props.variant}
-          colorScheme={props.colorScheme}
-          isRound={props.isRound}
-          fontSize={props.fontSize}
+          variant={props.variant ?? "ghost"}
+          colorScheme={props.colorScheme ?? "teal"}
+          isRound
+          fontSize={props.fontSize ?? "3xl"}
           icon={<Icon as={RiArticleFill} />}
         />
       </Link>
       <Link href="https://facebook.com/amane.suzu" isExternal>
         <IconButton
           aria-label="logo-facebook"
-          variant={props.variant}
-          colorScheme={props.colorScheme}
-          isRound={props.isRound}
-          fontSize={props.fontSize}
+          variant={props.variant ?? "ghost"}
+          colorScheme={props.colorScheme ?? "teal"}
+          isRound
+          fontSize={props.fontSize ?? "3xl"}
           icon={<Icon as={RiFacebookBoxFill} />}
         />
       </Link>
       <Link href="https://speakerdeck.com/amaotone" isExternal>
         <IconButton
           aria-label="logo-speakerdeck"
-          variant={props.variant}
-          colorScheme={props.colorScheme}
-          isRound={props.isRound}
-          fontSize={props.fontSize}
+          variant={props.variant ?? "ghost"}
+          colorScheme={props.colorScheme ?? "teal"}
+          isRound
+          fontSize={props.fontSize ?? "3xl"}
           icon={<Icon as={FaSpeakerDeck} />}
         />
       </Link>
@@ -75,5 +74,4 @@ SocialIcons.defaultProps = {
   fontSize: "3xl",
   colorScheme: "teal",
   variant: "ghost",
-  isRound: true,
 };

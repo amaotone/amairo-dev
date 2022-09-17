@@ -2,6 +2,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import "../styles/globals.css";
 
 const theme = extendTheme({
   fonts: {
@@ -29,16 +30,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="true"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

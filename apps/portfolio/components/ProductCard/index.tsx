@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Center,
   Heading,
@@ -10,6 +9,7 @@ import {
   LinkBox,
   LinkOverlay,
   Stack,
+  Tag,
   Text,
 } from "@chakra-ui/react";
 import { RiArticleLine, RiCodeLine, RiExternalLinkLine } from "react-icons/ri";
@@ -21,11 +21,11 @@ interface Props {
   blog?: string;
   code?: string;
   image?: string;
-  badges?: Array<string>;
+  tags?: Array<string>;
 }
 
 export const ProductCard: React.FC<Props> = (props: Props) => {
-  const { title, text, link, blog, code, image, badges } = props;
+  const { title, text, link, blog, code, image, tags } = props;
   return (
     <LinkBox boxShadow={"base"} bg="white">
       <Box boxShadow="sm">
@@ -43,10 +43,14 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
         <Text color={"gray.500"} fontSize={"sm"}>
           {text}
         </Text>
-        {badges && (
+        {tags && (
           <Stack direction={"row"}>
-            {badges.map(badge => {
-              return <Badge colorScheme="teal">{badge}</Badge>;
+            {tags.map(tag => {
+              return (
+                <Tag size="sm" colorScheme="teal">
+                  {tag}
+                </Tag>
+              );
             })}
           </Stack>
         )}

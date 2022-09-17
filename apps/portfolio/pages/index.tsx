@@ -4,7 +4,13 @@ import {
   Container,
   Heading,
   SimpleGrid,
+  Table,
+  Tbody,
+  Td,
   Text,
+  Th,
+  Thead,
+  Tr,
   VStack,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
@@ -105,7 +111,7 @@ const Home: NextPage = () => {
               blog="https://amalog.hateblo.jp/entry/ichibunichie-dev"
               code="https://github.com/amaotone/ichibunichie"
               image="https://ichibunichie.com/og.jpg"
-              badges={["Next.js", "Tailwind", "Firebase"]}
+              tags={["Next.js", "Tailwind", "Firebase"]}
             />
             <ProductCard
               title="Among Us Note"
@@ -114,16 +120,39 @@ const Home: NextPage = () => {
               blog="https://amalog.hateblo.jp/entry/among-us-note-dev"
               code="https://github.com/amaotone/among-us-note"
               image="https://aunote.site/ogp.png"
-              badges={["Next.js"]}
+              tags={["Next.js"]}
             />
             <ProductCard
               title="amairo.dev"
               text="このwebサイトです。ChakraとCSSアニメーションを勉強するためにつくりました。"
               link="https://amairo.dev"
               image="/og.jpg"
-              badges={["Next.js", "Chakra"]}
+              tags={["Next.js", "Chakra"]}
             />
           </SimpleGrid>
+        </Box>
+        <Box>
+          <Heading as="h2" mt={12} mb={6}>
+            favorites
+          </Heading>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Category</Th>
+                <Th>Contents</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>Programming Language</Td>
+                <Td>Python, TypeScript</Td>
+              </Tr>
+              <Tr>
+                <Td>ML Library</Td>
+                <Td>PyTorch, LightGBM</Td>
+              </Tr>
+            </Tbody>
+          </Table>
         </Box>
       </Container>
     </>

@@ -49,23 +49,23 @@ const Home: NextPage = () => {
             Cloudを活用した機械学習基盤の開発などに携っています。
           </Text>
           <Text>
-            Kaggle Master。AtCoder 水色。
+            Kaggle Master。AtCoder水色。
             趣味は個人開発で、Reactをはじめとしたフロントエンド技術によく触っています。
           </Text>
         </Box>
         <Box>
           <Heading as="h2" mt={12} mb={6}>
-            personal projects
+            products
           </Heading>
-          <SimpleGrid columns={3} spacing={3}>
+          <SimpleGrid columns={[1, 3]} spacing={3}>
             <ProductCard
               title="一文一会"
-              text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れてつくりました。"
+              text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れました。"
               link="https://ichibunichie.com"
               blog="https://amalog.hateblo.jp/entry/ichibunichie-dev"
               code="https://github.com/amaotone/ichibunichie"
               image="https://ichibunichie.com/og.jpg"
-              badges={["Next.js", "Tailwindcss", "Firebase"]}
+              badges={["Next.js", "Tailwind", "Firebase"]}
             />
             <ProductCard
               title="Among Us Note"
@@ -78,10 +78,10 @@ const Home: NextPage = () => {
             />
             <ProductCard
               title="amairo.dev"
-              text="このwebサイトです。ChakraUIとCSSアニメーションを勉強するためにつくりました。"
+              text="このwebサイトです。ChakraとCSSアニメーションを勉強するためにつくりました。"
               link="https://amairo.dev"
               image="/og.jpg"
-              badges={["Next.js", "ChakraUI"]}
+              badges={["Next.js", "Chakra"]}
             />
           </SimpleGrid>
         </Box>

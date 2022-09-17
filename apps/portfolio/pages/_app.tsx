@@ -4,6 +4,10 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 const theme = extendTheme({
+  fonts: {
+    heading: "'M PLUS Rounded 1c', sans-serif",
+    body: "'M PLUS Rounded 1c', sans-serif",
+  },
   components: {
     Heading: {
       baseStyle: {
@@ -14,6 +18,7 @@ const theme = extendTheme({
     Text: {
       baseStyle: {
         color: "gray.700",
+        letterSpacing: 1.05,
         lineHeight: 1.5,
       },
     },
@@ -24,6 +29,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

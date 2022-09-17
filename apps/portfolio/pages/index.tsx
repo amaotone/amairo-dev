@@ -100,8 +100,8 @@ const Home: NextPage = () => {
             Labで機械学習プロジェクトの立ち上げやGoogle
             Cloudを活用した機械学習基盤の開発などに携っています。
           </Text>
+          <Text>Kaggle Master。AtCoder水色。</Text>
           <Text>
-            Kaggle Master。AtCoder水色。
             趣味は個人開発で、Reactをはじめとしたフロントエンド技術によく触っています。
           </Text>
         </Box>

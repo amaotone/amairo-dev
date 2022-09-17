@@ -19,7 +19,8 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "latest",
+    "typescript": "^4.8.3"
   },
   "engines": {
     "npm": ">=8.0.0",
@@ -38,6 +39,8 @@
     ]
   },
   "dependencies": {
+    "@types/dom-to-image": "^2.6.4",
+    "dom-to-image": "^2.6.0",
     "next": "^12.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

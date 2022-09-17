@@ -47,7 +47,7 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
           <Stack direction={"row"}>
             {tags.map(tag => {
               return (
-                <Tag size="sm" colorScheme="teal">
+                <Tag size="sm" colorScheme="teal" key={tag}>
                   {tag}
                 </Tag>
               );

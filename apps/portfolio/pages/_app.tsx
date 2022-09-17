@@ -28,32 +28,32 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
-        <DefaultSeo
-          defaultTitle="amairo.dev"
-          description="Amane Suzuki's personal website"
-          openGraph={{
-            type: "website",
-            title: "amairo.dev",
-            description: "Amane Suzuki's personal website",
-            site_name: "amairo.dev",
-            url: "amairo.dev",
-            images: [
-              {
-                url: "/og.jpg",
-                width: 1200,
-                height: 630,
-                alt: "amairo.dev",
-                type: "image/jpg",
-              },
-            ],
-          }}
-          twitter={{
-            handle: "@SakuEji",
-            site: "@SakuEji",
-            cardType: "summary_large_image",
-          }}
-        />
       </Head>
+      <DefaultSeo
+        defaultTitle="amairo.dev"
+        description="Amane Suzuki's personal website"
+        openGraph={{
+          type: "website",
+          title: "amairo.dev",
+          description: "Amane Suzuki's personal website",
+          site_name: "amairo.dev",
+          url: "amairo.dev",
+          images: [
+            {
+              url: "/og.jpg",
+              width: 1200,
+              height: 630,
+              alt: "amairo.dev",
+              type: "image/jpg",
+            },
+          ],
+        }}
+        twitter={{
+          handle: "@SakuEji",
+          site: "@SakuEji",
+          cardType: "summary_large_image",
+        }}
+      />
       <Component {...pageProps} />
     </ChakraProvider>
   );

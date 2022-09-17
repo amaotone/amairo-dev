@@ -28,6 +28,8 @@ export const PulseAvatar: React.FC<Props> = (props: Props) => {
         position="relative"
         w={props.size}
         h={props.size}
+        borderRadius="50%"
+        boxShadow="base"
         _before={{
           content: "''",
           position: "relative",

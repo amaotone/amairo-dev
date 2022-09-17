@@ -1,111 +1,18 @@
 import {
-  Badge,
   Box,
   Center,
   Container,
   Heading,
-  Icon,
-  IconButton,
-  Image,
-  Link,
   SimpleGrid,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import {
-  RiArticleLine,
-  RiCodeLine,
-  RiExternalLinkLine,
-  RiFacebookBoxLine,
-  RiGithubLine,
-  RiTwitterLine,
-} from "react-icons/ri";
 import { blurAppearance } from "../components/blurAppearance";
+import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
-
-type Props = {
-  title: string;
-  text: string;
-  link: string;
-  blog?: string;
-  code?: string;
-  image?: string;
-  badges?: Array<string>;
-};
-
-const Card: React.FC<Props> = (props: Props) => {
-  const { title, text, link, blog, code, image, badges } = props;
-  return (
-    <Box overflow={"hidden"} boxShadow={"base"}>
-      <Box>
-        <Image
-          src={image || "https://via.placeholder.com/800x450.png"}
-          alt="placeholder"
-        />
-      </Box>
-      <Stack p={6} pb={3} justify={"center"}>
-        <Heading color={"gray.700"} size={"md"}>
-          {title}
-        </Heading>
-        <Text color={"gray.500"} fontSize={"sm"}>
-          {text}
-        </Text>
-        {badges && (
-          <Stack direction={"row"}>
-            {badges.map(badge => {
-              return <Badge colorScheme="teal">{badge}</Badge>;
-            })}
-          </Stack>
-        )}
-        <Box>
-          <Center>
-            <Stack direction={"row"}>
-              {link && (
-                <Link href={link} isExternal>
-                  <IconButton
-                    aria-label={title}
-                    colorScheme="teal"
-                    variant="ghost"
-                    isRound
-                    p={1}
-                    icon={<Icon as={RiExternalLinkLine} w={4} h={4} />}
-                  />
-                </Link>
-              )}
-              {blog && (
-                <Link href={blog} isExternal>
-                  <IconButton
-                    aria-label="blog"
-                    colorScheme="teal"
-                    variant="ghost"
-                    isRound
-                    p={1}
-                    icon={<Icon as={RiArticleLine} w={4} h={4} />}
-                  />
-                </Link>
-              )}
-              {code && (
-                <Link href={code} isExternal>
-                  <IconButton
-                    aria-label="code"
-                    colorScheme="teal"
-                    variant="ghost"
-                    isRound
-                    p={1}
-                    icon={<Icon as={RiCodeLine} w={4} h={4} />}
-                  />
-                </Link>
-              )}
-            </Stack>
-          </Center>
-        </Box>
-      </Stack>
-    </Box>
-  );
-};
+import { SocialIcons } from "../components/SocialIcons";
 
 const Home: NextPage = () => {
   return (
@@ -122,52 +29,7 @@ const Home: NextPage = () => {
             <Heading as="h1" size="2xl" m={3}>
               amairo.dev
             </Heading>
-
-            <Stack direction={"row"} align={"center"}>
-              <Link href="https://twitter.com/SakuEji" isExternal>
-                <IconButton
-                  aria-label="logo-twitter"
-                  variant="ghost"
-                  colorScheme="teal"
-                  isRound
-                  p={1}
-                  fontSize="3xl"
-                  icon={<Icon as={RiTwitterLine} />}
-                />
-              </Link>
-              <Link href="https://github.com/amaotone" isExternal>
-                <IconButton
-                  aria-label="logo-github"
-                  variant="ghost"
-                  colorScheme="teal"
-                  isRound
-                  p={1}
-                  fontSize="3xl"
-                  icon={<Icon as={RiGithubLine} />}
-                />
-              </Link>
-              <Link href="https://amalog.hateblo.jp" isExternal>
-                <IconButton
-                  aria-label="logo-blog"
-                  variant="ghost"
-                  colorScheme="teal"
-                  isRound
-                  p={1}
-                  fontSize="3xl"
-                  icon={<Icon as={RiArticleLine} />}
-                />
-              </Link>
-              <Link href="https://facebook.com/amane.suzu" isExternal>
-                <IconButton
-                  aria-label="logo-facebook"
-                  variant="ghost"
-                  colorScheme="teal"
-                  isRound
-                  fontSize="3xl"
-                  icon={<Icon as={RiFacebookBoxLine} />}
-                />
-              </Link>
-            </Stack>
+            <SocialIcons fontSize="2xl" />
           </VStack>
         </Center>
         <Box>
@@ -185,7 +47,7 @@ const Home: NextPage = () => {
             Personal Projects
           </Heading>
           <SimpleGrid columns={3} spacing={3}>
-            <Card
+            <ProductCard
               title="一文一会"
               text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れて制作しました。"
               link="https://ichibunichie.com"
@@ -194,7 +56,7 @@ const Home: NextPage = () => {
               image="https://ichibunichie.com/og.jpg"
               badges={["Next.js", "Firebase"]}
             />
-            <Card
+            <ProductCard
               title="Among Us Note"
               text="Among Usの盤面精査をするツールです。毎日のように遊んでいたときに作りました。"
               link="https://aunote.site"

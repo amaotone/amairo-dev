@@ -31,6 +31,6 @@
     "tsparticles": "^2.3.1"
   },
   "resolutions": {
-    "@types/react": "^18.2.0"
+    "@types/react": "^18.0.20"
   }
 }

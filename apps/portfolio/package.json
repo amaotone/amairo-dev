@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/node": "18.7.18",
-    "@types/react": "18.0.20",
+    "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "eslint": "8.23.1",
     "eslint-config-next": "12.3.1",
@@ -31,6 +31,6 @@
     "tsparticles": "2.3.1"
   },
   "resolutions": {
-    "@types/react": "^18.0.20"
+    "@types/react": "18.0.21"
   }
 }

@@ -4,6 +4,6 @@
   "private": true,
   "dependencies": {
     "@tsconfig/next": "1.0.2",
-    "@tsconfig/node16-strictest": "1.0.3"
+    "@tsconfig/node16-strictest": "1.0.4"
   }
 }

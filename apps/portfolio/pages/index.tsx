@@ -22,6 +22,7 @@ import type { Engine } from "tsparticles-engine";
 import { blurAppearance } from "../components/blurAppearance";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
+import { SkillRaders } from "../components/SkillRadars";
 import { SocialIcons } from "../components/SocialIcons";
 
 const Home: NextPage = () => {
@@ -86,7 +87,7 @@ const Home: NextPage = () => {
         </Center>
         <Box>
           <Heading as="h2" mt={12} mb={6}>
-            about me
+            About me
           </Heading>
           <Text fontWeight={700}>鈴木天音 / Amane Suzuki</Text>
           <Text>
@@ -102,12 +103,12 @@ const Home: NextPage = () => {
           </Text>
           <Text>Kaggle Master。AtCoder水色。</Text>
           <Text>
-            趣味は個人開発で、Reactをはじめとしたフロントエンド技術によく触っています。
+            趣味は個人開発で、React、Next.jsをはじめとしたフロントエンド技術によく触れています。
           </Text>
         </Box>
         <Box>
           <Heading as="h2" mt={12} mb={6}>
-            products
+            Product
           </Heading>
           <SimpleGrid columns={[1, 3]} spacing={3}>
             <ProductCard
@@ -139,7 +140,7 @@ const Home: NextPage = () => {
         </Box>
         <Box>
           <Heading as="h2" mt={12} mb={6}>
-            favorites
+            Favorite
           </Heading>
           <Table variant="simple">
             <Thead>
@@ -159,6 +160,12 @@ const Home: NextPage = () => {
               </Tr>
             </Tbody>
           </Table>
+        </Box>
+        <Box>
+          <Heading as="h2" mt={12} mb={6}>
+            Skill
+          </Heading>
+          <SkillRaders />
         </Box>
       </Container>
     </>

@@ -121,7 +121,7 @@ export const SkillRaders: React.FC = () => {
               line: {
                 fill: true,
                 backgroundColor: "#9F7AEA33",
-                borderColor: "teal",
+                borderColor: "#9F7AEA",
                 borderWidth: 1,
               },
             },

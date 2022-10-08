@@ -19,6 +19,7 @@ import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import type { Engine } from "tsparticles-engine";
+import { BlogArticles } from "../components/BlogArticles";
 import { blurAppearance } from "../components/blurAppearance";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
@@ -166,6 +167,12 @@ const Home: NextPage = () => {
             Skill
           </Heading>
           <SkillRaders />
+        </Box>
+        <Box>
+          <Heading as="h2" mt={12} mb={6}>
+            Blog
+          </Heading>
+          <BlogArticles />
         </Box>
       </Container>
     </>

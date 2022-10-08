@@ -43,7 +43,7 @@ export const BlogArticles: React.FC = () => {
           <UnorderedList>
             {posts.map(post => {
               return (
-                <ListItem>
+                <ListItem key={post.title}>
                   {strftime("%Y-%m-%d ", post.pubDate)}
                   <Link color="teal" href={post.link}>
                     {post.title}

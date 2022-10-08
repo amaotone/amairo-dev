@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Box, Link, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box, Link, List, ListItem } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Parser from "rss-parser";
 import strftime from "strftime";
@@ -40,7 +40,7 @@ export const BlogArticles: React.FC = () => {
     <>
       {posts && (
         <>
-          <UnorderedList>
+          <List>
             {posts.map(post => {
               return (
                 <ListItem key={post.title}>
@@ -51,7 +51,7 @@ export const BlogArticles: React.FC = () => {
                 </ListItem>
               );
             })}
-          </UnorderedList>
+          </List>
           <Box textAlign="right">
             <Link color="teal" href="https://amalog.hateblo.jp">
               and more <ExternalLinkIcon mx="2px" />

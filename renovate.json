@@ -1,11 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    ":timezone(Asia/Tokyo)",
-    ":prHourlyLimitNone",
-    ":automergePatch"
-  ],
-  "schedule": ["at any time"],
-  "dependencyDashboard": true
+  "extends": ["github>hatena/renovate-config"]
 }

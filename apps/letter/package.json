@@ -21,8 +21,8 @@
     "@types/react": "18.0.25"
   },
   "dependencies": {
-    "@chakra-ui/icons": "2.0.10",
-    "@chakra-ui/react": "2.3.4",
+    "@chakra-ui/icons": "2.0.19",
+    "@chakra-ui/react": "2.7.1",
     "@types/dom-to-image": "2.6.4",
     "dom-to-image": "2.6.0",
     "dom-to-image-more": "2.12.0",

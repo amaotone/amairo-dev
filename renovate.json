@@ -1,4 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>hatena/renovate-config"]
+  "extends": [
+    "github>hatena/renovate-config",
+    "monorepo:turbo",
+    "group:recommended",
+    "group:allNonMajor"
+  ]
 }

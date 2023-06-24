@@ -10,33 +10,33 @@
   },
   "devDependencies": {
     "@amairo-dev/tsconfig": "*",
-    "@types/node": "18.7.18",
-    "@types/react": "18.0.25",
-    "@types/react-dom": "18.0.8",
-    "eslint": "8.25.0",
-    "eslint-config-next": "12.3.1",
-    "typescript": "4.8.3"
+    "@types/node": "18.16.18",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "eslint": "8.43.0",
+    "eslint-config-next": "12.3.4",
+    "typescript": "4.9.5"
   },
   "dependencies": {
-    "@chakra-ui/icons": "2.0.10",
-    "@chakra-ui/react": "2.3.4",
-    "@emotion/react": "11.10.4",
-    "@emotion/styled": "11.10.4",
+    "@chakra-ui/icons": "2.0.19",
+    "@chakra-ui/react": "2.7.1",
+    "@emotion/react": "11.11.1",
+    "@emotion/styled": "11.11.0",
     "@types/strftime": "^0.9.4",
     "chart.js": "^3.9.1",
-    "framer-motion": "7.5.3",
-    "next-seo": "5.5.0",
+    "framer-motion": "7.10.3",
+    "next-seo": "5.15.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
-    "react-icons": "4.4.0",
-    "react-tsparticles": "2.3.3",
-    "rss-parser": "^3.12.0",
-    "rss-to-json": "^2.1.0",
-    "strftime": "^0.10.1",
-    "tsparticles": "2.3.4"
+    "react-icons": "4.10.1",
+    "react-tsparticles": "2.10.1",
+    "rss-parser": "^3.13.0",
+    "rss-to-json": "^2.1.1",
+    "strftime": "^0.10.2",
+    "tsparticles": "2.10.1"
   },
   "resolutions": {
-    "@types/react": "18.0.25"
+    "@types/react": "18.2.14"
   }
 }

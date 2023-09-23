@@ -35,8 +35,5 @@
     "rss-to-json": "^2.1.1",
     "strftime": "^0.10.2",
     "tsparticles": "2.10.1"
-  },
-  "resolutions": {
-    "@types/react": "18.2.14"
   }
 }

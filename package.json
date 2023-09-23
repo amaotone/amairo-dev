@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
@@ -26,7 +27,10 @@
     "npm": ">=8.19.4",
     "node": ">=v16.20.1"
   },
-  "packageManager": "npm@8.19.4",
+  "resolutions": {
+    "@types/react": "18.2.14"
+  },
+  "packageManager": "pnpm@8.6.2",
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix"

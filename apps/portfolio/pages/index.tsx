@@ -18,16 +18,15 @@ import Head from "next/head";
 import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import type { Engine } from "tsparticles-engine";
 import { BlogArticles } from "../components/BlogArticles";
-import { blurAppearance } from "../components/blurAppearance";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
 import { SkillRaders } from "../components/SkillRadars";
 import { SocialIcons } from "../components/SocialIcons";
+import { blurAppearance } from "../components/blurAppearance";
 
 const Home: NextPage = () => {
-  const particlesInit = useCallback(async (engine: Engine) => {
+  const particlesInit = useCallback(async (engine: any) => {
     await loadFull(engine);
   }, []);
   return (

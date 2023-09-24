@@ -6,6 +6,7 @@
 	import { items, ownedItemsStore } from './items';
 	import { scoreStore } from './scores';
 	import { FIZZBUZZ } from "./settings";
+	import { formatNumber } from "./utils";
 
 	let ownedItems: { [key: string]: number };
 	ownedItemsStore.subscribe(value => {
@@ -26,10 +27,6 @@
 			ownedItems[item.name] = ownedItems[item.name] + 1 || 1;
 			return ownedItems;
 		});
-	}
-
-	function formatNumber(n: number) {
-		return Intl.NumberFormat("en-US", {notation: 'compact', maximumFractionDigits: 1}).format(n)
 	}
 </script>
 

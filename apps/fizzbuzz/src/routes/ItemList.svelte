@@ -6,7 +6,7 @@
 	import { items, ownedItemsStore } from './items';
 	import { scoreStore } from './scores';
 	import { FIZZBUZZ } from "./settings";
-	import { formatNumber } from "./utils";
+	import { calcCost, formatNumber } from "./utils";
 
 	let ownedItems: { [key: string]: number };
 	ownedItemsStore.subscribe(value => {
@@ -21,8 +21,9 @@
 	})
 
 	function buyItem(item: Item) {
-		if (count < item.cost * FIZZBUZZ) return;
-		scoreStore.update((n) => n - item.cost * FIZZBUZZ);
+		const cost = calcCost(item.cost, ownedItems[item.name] || 0) * FIZZBUZZ
+		if (count < cost) return;
+		scoreStore.update((n) => n - cost);
 		ownedItemsStore.update((ownedItems) => {
 			ownedItems[item.name] = ownedItems[item.name] + 1 || 1;
 			return ownedItems;
@@ -45,8 +46,8 @@
 				<Table.Cell class="font-extrabold">{item.name} ({formatNumber(item.cps)}/s)</Table.Cell>
 				<Table.Cell>{ownedItems[item.name]}</Table.Cell>
 				<Table.Cell class="text-right">
-					<Button on:click={()=>buyItem(item)} variant={fizzbuzz < item.cost ? 'outline' : 'default'}>
-						{formatNumber(item.cost)}
+					<Button on:click={()=>buyItem(item)} variant={fizzbuzz < calcCost(item.cost, ownedItems[item.name]) ? 'outline' : 'default'}>
+						{formatNumber(calcCost(item.cost, ownedItems[item.name]))}
 					</Button>
 				</Table.Cell>
 			</Table.Row>

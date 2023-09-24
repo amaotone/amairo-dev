@@ -17,4 +17,4 @@
 </script>
 
 <p class="scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl">{fizzbuzz(score)}</p>
-<p class="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">{formatNumber(Math.floor(score / 15))} FB</p>
+<p class="scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">{formatNumber(Math.floor(score / 15))} FizzBuzz</p>

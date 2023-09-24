@@ -1,18 +1,28 @@
 <script lang="ts">
+	import { browser } from "$app/environment";
 	import { Button } from "$lib/components/ui/button";
+	import { onMount } from "svelte";
 	import Counter from "./Counter.svelte";
 	import ItemList from "./ItemList.svelte";
 	import { ownedItemsStore, totalCpsStore } from './items';
 	import { scoreStore } from './scores';
-	
-	let ownedItems: { [key: string]: number };
-	ownedItemsStore.subscribe(value => {
-		ownedItems = value;
-	})
 
-	let score: number;
-	scoreStore.subscribe(value => {
-		score = value;
+	onMount(() => {
+		if (browser) {
+			const score = localStorage.getItem('score');
+			if (score) scoreStore.set(parseInt(score));
+
+			const ownedItems = localStorage.getItem('ownedItems');
+			if (ownedItems) ownedItemsStore.set(JSON.parse(ownedItems));
+		}
+
+		scoreStore.subscribe(score => {
+			if (browser) localStorage.setItem('score', score.toString());
+		})
+
+		ownedItemsStore.subscribe(ownedItems => {
+			if (browser) localStorage.setItem('ownedItems', JSON.stringify(ownedItems));
+		})
 	})
 
 	const increment = () => scoreStore.update((n)=>n+1);
@@ -33,7 +43,7 @@
 </script>
 
 <svelte:head>
-	<title>FizzBuzz</title>
+	<title>FizzBuzz Clicker</title>
 	<meta name="description" content="fizzbuzz clicker" />
 </svelte:head>
 

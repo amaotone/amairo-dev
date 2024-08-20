@@ -23,7 +23,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@types/strftime": "^0.9.4",
-    "chart.js": "^3.9.1",
+    "chart.js": "^4.4.4",
     "framer-motion": "7.10.3",
     "next-seo": "5.15.0",
     "react": "18.2.0",

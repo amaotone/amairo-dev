@@ -15,22 +15,22 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/react": "18.2.14",
+    "@types/react": "18.3.11",
     "eslint-config-custom": "*",
     "husky": "8.0.3",
-    "lint-staged": "13.2.2",
+    "lint-staged": "13.3.0",
     "prettier": "latest",
     "turbo": "latest",
     "typescript": "4.9.5"
   },
   "engines": {
     "npm": ">=8.19.4",
-    "node": ">=v18.16.1"
+    "node": ">=18.20.4"
   },
   "resolutions": {
-    "@types/react": "18.2.14"
+    "@types/react": "18.3.11"
   },
-  "packageManager": "pnpm@8.6.2",
+  "packageManager": "pnpm@8.15.9",
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix"
@@ -43,10 +43,10 @@
     ]
   },
   "dependencies": {
-    "@types/dom-to-image": "2.6.4",
+    "@types/dom-to-image": "2.6.7",
     "dom-to-image": "2.6.0",
     "next": "12.3.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
 }

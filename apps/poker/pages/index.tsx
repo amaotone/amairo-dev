@@ -1,4 +1,5 @@
 import { Box, Button, Container, HStack, VStack } from "@chakra-ui/react";
+import { Idea01Icon, NextIcon } from "hugeicons-react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -147,6 +148,7 @@ const Home: NextPage = () => {
 									colorScheme="brand"
 									size="md"
 									width="140px"
+									leftIcon={<Idea01Icon size={20} />}
 								>
 									Open
 								</Button>
@@ -157,8 +159,9 @@ const Home: NextPage = () => {
 									variant="outline"
 									size="md"
 									width="140px"
+									leftIcon={<NextIcon size={20} />}
 								>
-									New Poker
+									Next
 								</Button>
 							</HStack>
 

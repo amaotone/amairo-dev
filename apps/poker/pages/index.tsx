@@ -16,7 +16,7 @@ import {
 	chakra,
 	useDisclosure,
 } from "@chakra-ui/react";
-import { Coffee02Icon } from "hugeicons-react";
+import { AddTeamIcon, Coffee02Icon, Share01Icon } from "hugeicons-react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRef, useState } from "react";
@@ -207,22 +207,31 @@ const Home: NextPage = () => {
 					<Heading color="brand.500" size="lg">
 						Planning Poker
 					</Heading>
-					<Button
-						leftIcon={
-							<Box as="span" fontSize="lg">
-								🔗
-							</Box>
-						}
-						colorScheme="brand"
-						variant="ghost"
-						size="sm"
-						onClick={() => {
-							// 現在のURLをクリップボードにコピー
-							navigator.clipboard.writeText(window.location.href);
-						}}
-					>
-						Share
-					</Button>
+					<HStack spacing={2}>
+						<Button
+							leftIcon={<AddTeamIcon size={20} />}
+							colorScheme="brand"
+							variant="ghost"
+							size="sm"
+							onClick={() => {
+								// TODO: 招待機能の実装
+								console.log("Invite team members");
+							}}
+						>
+							Invite
+						</Button>
+						<Button
+							leftIcon={<Share01Icon size={20} />}
+							colorScheme="brand"
+							variant="ghost"
+							size="sm"
+							onClick={() => {
+								navigator.clipboard.writeText(window.location.href);
+							}}
+						>
+							Share
+						</Button>
+					</HStack>
 				</Box>
 
 				<Box px={8} flex="1" display="flex" flexDirection="column" pb="120px">
@@ -236,7 +245,7 @@ const Home: NextPage = () => {
 									size="md"
 									width="140px"
 								>
-									Open All Cards
+									Open
 								</Button>
 								<Button
 									onClick={onOpen}

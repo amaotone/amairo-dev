@@ -57,7 +57,7 @@ export const Stats = ({ cards }: StatsProps) => {
 	const stats = calculateStats(cards.filter((card) => card.isOpen));
 
 	return (
-		<HStack gap={{ base: 6, md: 12 }} justify="center" mt={6} mb={4}>
+		<HStack gap={{ base: 6, md: 12 }} justify="center" mt={8}>
 			<StatItem label="Average" value={stats?.average ?? "-"} />
 			<StatItem label="Median" value={stats?.median ?? "-"} />
 			<StatItem label="Max" value={stats?.max ?? "-"} />

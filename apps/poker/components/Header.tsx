@@ -1,5 +1,5 @@
 import { Box, Button, HStack, Heading } from "@chakra-ui/react";
-import { AddTeamIcon, Share01Icon } from "hugeicons-react";
+import { AddTeamIcon, Cards01Icon, Share01Icon } from "hugeicons-react";
 
 export const Header: React.FC = () => (
 	<Box
@@ -13,9 +13,12 @@ export const Header: React.FC = () => (
 		borderColor="gray.100"
 		flexShrink={0}
 	>
-		<Heading color="brand.500" size="md">
-			Planning Poker
-		</Heading>
+		<HStack spacing={2}>
+			<Cards01Icon size={24} color="var(--chakra-colors-brand-500)" />
+			<Heading color="brand.500" size="md">
+				Planning Poker
+			</Heading>
+		</HStack>
 		<HStack gap={2}>
 			<Button
 				colorScheme="brand"

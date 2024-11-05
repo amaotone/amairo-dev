@@ -1,7 +1,7 @@
 import { Box, Button, Container, HStack, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardGrid } from "../components/CardGrid";
 import { CardSelector } from "../components/CardSelector";
 import { Header } from "../components/Header";
@@ -138,7 +138,7 @@ const Home: NextPage = () => {
 					justifyContent="center"
 					overflow="auto"
 				>
-					<VStack gap="6" align="stretch">
+					<VStack gap={8} align="stretch">
 						<Box>
 							<HStack gap={4} justify="center">
 								<Button

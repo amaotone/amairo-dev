@@ -1,27 +1,13 @@
-import {
-	AlertDialog,
-	AlertDialogBody,
-	AlertDialogContent,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogOverlay,
-	Box,
-	Button,
-	Container,
-	Grid,
-	GridItem,
-	HStack,
-	Heading,
-	VStack,
-} from "@chakra-ui/react";
-import { AddTeamIcon, Coffee02Icon, Share01Icon } from "hugeicons-react";
+import { Box, Button, Container, HStack, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useRef, useState } from "react";
-import { Card } from "../components/Card";
-
-const CARD_VALUES = [0, 1, 2, 3, 5, 8, 13, 21, "?", "☕"] as const;
-type CardValue = (typeof CARD_VALUES)[number];
+import { useState } from "react";
+import { CardGrid } from "../components/CardGrid";
+import { CardSelector } from "../components/CardSelector";
+import { Header } from "../components/Header";
+import { ResetDialog } from "../components/ResetDialog";
+import { Stats } from "../components/Stats";
+import type { CardType, CardValue } from "../types";
 
 const NAMES = [
 	"Alice",
@@ -61,42 +47,10 @@ const getRandomName = (): string => {
 	return NAMES[randomIndex];
 };
 
-interface CardType {
-	id: string;
-	value: CardValue;
-	isOpen: boolean;
-	name: string;
-	isSorted: boolean;
-}
-
-const calculateStats = (cards: CardType[]) => {
-	const numericValues = cards
-		.filter((card) => typeof card.value === "number")
-		.map((card) => card.value as number);
-
-	if (numericValues.length === 0) return null;
-
-	const average =
-		numericValues.reduce((a, b) => a + b, 0) / numericValues.length;
-	const sorted = [...numericValues].sort((a, b) => a - b);
-	const median =
-		sorted.length % 2 === 0
-			? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
-			: sorted[Math.floor(sorted.length / 2)];
-	const max = Math.max(...numericValues);
-
-	return {
-		average: average.toFixed(1),
-		median: median.toFixed(1),
-		max: max.toString(),
-	};
-};
-
 const Home: NextPage = () => {
 	const [cards, setCards] = useState<CardType[]>([]);
 	const [isSorting, setIsSorting] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
-	const cancelRef = useRef<HTMLButtonElement>(null);
 
 	const handleAddCard = (selectedValue: CardValue) => {
 		const newCard: CardType = {
@@ -107,27 +61,6 @@ const Home: NextPage = () => {
 			isSorted: false,
 		};
 		setCards((prev) => [...prev, newCard]);
-	};
-
-	const sortCards = () => {
-		setIsSorting(true);
-		const sortedCards = [...cards]
-			.sort((a, b) => {
-				if (typeof a.value === "number" && typeof b.value === "number") {
-					return a.value - b.value;
-				}
-				if (typeof a.value === "number") return -1;
-				if (typeof b.value === "number") return 1;
-				return 0;
-			})
-			.map((card) => ({ ...card, isOpen: true }));
-
-		// アニメーション完了までの時間を延長
-		setTimeout(() => {
-			setIsSorting(false);
-		}, 900); // アニメーション時間 + 余裕を持たせた時間
-
-		setCards(sortedCards);
 	};
 
 	const handleOpenAll = () => {
@@ -179,8 +112,6 @@ const Home: NextPage = () => {
 		setIsOpen(false);
 	};
 
-	const stats = calculateStats(cards.filter((card) => card.isOpen));
-
 	return (
 		<>
 			<Head>
@@ -197,55 +128,7 @@ const Home: NextPage = () => {
 				display="flex"
 				flexDirection="column"
 			>
-				<Box
-					py={2}
-					px={8}
-					display="flex"
-					justifyContent="space-between"
-					alignItems="center"
-					h="52px"
-					borderBottom="1px solid"
-					borderColor="gray.100"
-					flexShrink={0}
-				>
-					<Heading color="brand.500" size="md">
-						Planning Poker
-					</Heading>
-					<HStack gap={2}>
-						<Button
-							colorScheme="brand"
-							variant="ghost"
-							size="sm"
-							onClick={() => {
-								console.log("Invite team members");
-							}}
-							w={{ base: "8", md: "auto" }}
-							minW={{ base: "8", md: "auto" }}
-							p={{ base: "0", md: "2" }}
-						>
-							<AddTeamIcon size={20} />
-							<Box display={{ base: "none", md: "block" }} ml={{ md: 2 }}>
-								Invite
-							</Box>
-						</Button>
-						<Button
-							colorScheme="brand"
-							variant="ghost"
-							size="sm"
-							onClick={() => {
-								navigator.clipboard.writeText(window.location.href);
-							}}
-							w={{ base: "8", md: "auto" }}
-							minW={{ base: "8", md: "auto" }}
-							p={{ base: "0", md: "2" }}
-						>
-							<Share01Icon size={20} />
-							<Box display={{ base: "none", md: "block" }} ml={{ md: 2 }}>
-								Share
-							</Box>
-						</Button>
-					</HStack>
-				</Box>
+				<Header />
 
 				<Box
 					px={8}
@@ -279,157 +162,23 @@ const Home: NextPage = () => {
 								</Button>
 							</HStack>
 
-							<HStack gap={{ base: 6, md: 12 }} justify="center" mt={6} mb={4}>
-								<Box textAlign="center" minW={{ base: "80px", md: "100px" }}>
-									<Box
-										fontSize={{ base: "sm", md: "md" }}
-										color="gray.500"
-										mb={{ base: 1, md: 2 }}
-									>
-										Average
-									</Box>
-									<Box
-										fontSize={{ base: "2xl", md: "3xl" }}
-										fontWeight="bold"
-										color="brand.500"
-									>
-										{stats?.average ?? "-"}
-									</Box>
-								</Box>
-								<Box textAlign="center" minW={{ base: "80px", md: "100px" }}>
-									<Box
-										fontSize={{ base: "sm", md: "md" }}
-										color="gray.500"
-										mb={{ base: 1, md: 2 }}
-									>
-										Median
-									</Box>
-									<Box
-										fontSize={{ base: "2xl", md: "3xl" }}
-										fontWeight="bold"
-										color="brand.500"
-									>
-										{stats?.median ?? "-"}
-									</Box>
-								</Box>
-								<Box textAlign="center" minW={{ base: "80px", md: "100px" }}>
-									<Box
-										fontSize={{ base: "sm", md: "md" }}
-										color="gray.500"
-										mb={{ base: 1, md: 2 }}
-									>
-										Max
-									</Box>
-									<Box
-										fontSize={{ base: "2xl", md: "3xl" }}
-										fontWeight="bold"
-										color="brand.500"
-									>
-										{stats?.max ?? "-"}
-									</Box>
-								</Box>
-							</HStack>
+							<Stats cards={cards} />
 						</Box>
 
 						<Box>
-							<Grid
-								templateColumns={{
-									base: "repeat(5, 60px)",
-									md: "repeat(5, 80px)",
-								}}
-								templateRows="repeat(3, 1fr)"
-								gap={4}
-								justifyContent="center"
-								maxW={{
-									base: "calc(60px * 5 + var(--chakra-space-4) * 4)",
-									md: "calc(80px * 5 + var(--chakra-space-4) * 4)",
-								}}
-								h={{
-									base: "calc(110px * 3 + var(--chakra-space-4) * 2)",
-									md: "calc(150px * 3 + var(--chakra-space-4) * 2)",
-								}}
-								mx="auto"
-							>
-								{cards.slice(0, 15).map((card) => (
-									<GridItem
-										key={card.id}
-										h={{ base: "110px", md: "150px" }}
-										display="flex"
-										alignItems="flex-start"
-									>
-										<Card
-											id={card.id}
-											value={card.value}
-											isOpen={card.isOpen}
-											name={card.name}
-											isSorted={card.isSorted}
-											width={{ base: "60px", md: "80px" }}
-										/>
-									</GridItem>
-								))}
-							</Grid>
+							<CardGrid cards={cards} />
 						</Box>
 					</VStack>
 				</Box>
 
-				<Box
-					bg="white"
-					py={4}
-					px={4}
-					borderTop="1px solid"
-					borderColor="gray.100"
-					flexShrink={0}
-				>
-					<Container maxW="container.lg">
-						<HStack gap={2} justify="center" flexWrap="wrap">
-							{CARD_VALUES.map((value) => (
-								<Button
-									key={value}
-									onClick={() => handleAddCard(value)}
-									size="md"
-									colorScheme="brand"
-									variant="outline"
-									w="16"
-									h="12"
-									fontSize="xl"
-								>
-									{value === "☕" ? (
-										<Coffee02Icon color="currentColor" />
-									) : (
-										value
-									)}
-								</Button>
-							))}
-						</HStack>
-					</Container>
-				</Box>
+				<CardSelector onSelect={handleAddCard} />
 			</Container>
 
-			<AlertDialog
+			<ResetDialog
 				isOpen={isOpen}
-				leastDestructiveRef={cancelRef}
 				onClose={() => setIsOpen(false)}
-				isCentered
-			>
-				<AlertDialogOverlay>
-					<AlertDialogContent mx={4}>
-						<AlertDialogHeader fontSize="lg" fontWeight="bold">
-							Are you sure?
-						</AlertDialogHeader>
-						<AlertDialogBody>
-							This will reset all cards. Are you sure you want to continue?
-						</AlertDialogBody>
-						<AlertDialogFooter>
-							<Button ref={cancelRef} onClick={() => setIsOpen(false)}>
-								Cancel
-							</Button>
-							<Button colorScheme="gray" onClick={handleReset} ml={3}>
-								Reset
-							</Button>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialogOverlay>
-			</AlertDialog>
+				onReset={handleReset}
+			/>
 		</>
 	);
 };

@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { useBreakpointValue } from "@chakra-ui/react";
 import anime from "animejs";
 import { Coffee02Icon } from "hugeicons-react";
 import { type FC, useEffect, useState } from "react";
@@ -9,6 +10,7 @@ interface CardProps {
 	isOpen: boolean;
 	name: string;
 	isSorted: boolean;
+	width?: { base: string; md: string };
 }
 
 const animateInitialAppearance = (id: string, onComplete: () => void) => {
@@ -56,7 +58,14 @@ const animateSortedAppearance = (id: string) => {
 	});
 };
 
-export const Card: FC<CardProps> = ({ id, value, isOpen, name, isSorted }) => {
+export const Card: FC<CardProps> = ({
+	id,
+	value,
+	isOpen,
+	name,
+	isSorted,
+	width = { base: "60px", md: "80px" },
+}) => {
 	const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 	const [prevIsSorted, setPrevIsSorted] = useState(isSorted);
 
@@ -82,8 +91,8 @@ export const Card: FC<CardProps> = ({ id, value, isOpen, name, isSorted }) => {
 				<Box
 					id={id}
 					position="relative"
-					width="60px"
-					height="90px"
+					width={width}
+					height={{ base: "84px", md: "112px" }}
 					style={{ transformStyle: "preserve-3d" }}
 					transition="transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
 					transform={
@@ -125,7 +134,7 @@ export const Card: FC<CardProps> = ({ id, value, isOpen, name, isSorted }) => {
 						flexDirection="column"
 						visibility={isOpen ? "visible" : "hidden"}
 					>
-						<Box fontSize="xl" fontWeight="bold">
+						<Box fontSize={{ base: "lg", md: "3xl" }} fontWeight="bold">
 							{value === "☕" ? <Coffee02Icon color="currentColor" /> : value}
 						</Box>
 					</Box>
@@ -133,11 +142,17 @@ export const Card: FC<CardProps> = ({ id, value, isOpen, name, isSorted }) => {
 			</Box>
 			<Box
 				id={`${id}-name`}
-				fontSize="12px"
-				mt="4px"
+				fontSize={{ base: "xs", md: "sm" }}
 				color="gray.600"
 				fontWeight="500"
 				opacity={0}
+				mt={2}
+				maxW={width}
+				textAlign="center"
+				overflow="hidden"
+				textOverflow="ellipsis"
+				whiteSpace="nowrap"
+				lineHeight="1.5"
 			>
 				{name}
 			</Box>

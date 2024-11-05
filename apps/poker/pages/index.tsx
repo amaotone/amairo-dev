@@ -16,6 +16,7 @@ import {
 	chakra,
 	useDisclosure,
 } from "@chakra-ui/react";
+import { Coffee02Icon } from "hugeicons-react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRef, useState } from "react";
@@ -141,14 +142,23 @@ const Home: NextPage = () => {
 					setTimeout(() => {
 						const sortedCards = [...cards]
 							.sort((a, b) => {
+								// 数値同士の比較
 								if (
 									typeof a.value === "number" &&
 									typeof b.value === "number"
 								) {
 									return a.value - b.value;
 								}
+								// 数値を文字列より前に
 								if (typeof a.value === "number") return -1;
 								if (typeof b.value === "number") return 1;
+								// ☕を最後に
+								if (a.value === "☕") return 1;
+								if (b.value === "☕") return -1;
+								// ?を☕の前に
+								if (a.value === "?") return -1;
+								if (b.value === "?") return 1;
+								// ここまでこない（型安全のため）
 								return 0;
 							})
 							.map((card) => ({
@@ -179,128 +189,134 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<Box
-				as="nav"
+			<Container
+				minH="100vh"
+				maxW="container.lg"
 				bg="white"
-				py={2}
-				px={8}
-				position="fixed"
-				top={0}
-				left={0}
-				right={0}
-				borderBottom="1px"
-				borderColor="gray.200"
-				zIndex={1}
+				p={0}
+				display="flex"
+				flexDirection="column"
 			>
-				<Container maxW="container.lg">
+				<Box
+					py={2}
+					px={8}
+					display="flex"
+					justifyContent="space-between"
+					alignItems="center"
+				>
 					<Heading color="brand.500" size="lg">
 						Planning Poker
 					</Heading>
-				</Container>
-			</Box>
-
-			<Container
-				minH="calc(100vh - 52px)"
-				maxW="container.lg"
-				bg="gray.50"
-				p={8}
-				borderRadius="xl"
-				mt="52px"
-				pb="120px"
-				position="relative"
-			>
-				<VStack spacing="6" h="100%" justify={"space-between"} align="stretch">
-					<Box>
-						<HStack spacing={4} justify="center">
-							<Button
-								onClick={handleOpenAll}
-								isDisabled={cards.length === 0}
-								colorScheme="brand"
-								size="md"
-								width="140px"
-							>
-								Open All Cards
-							</Button>
-							<Button
-								onClick={onOpen}
-								isDisabled={cards.length === 0}
-								colorScheme="red"
-								variant="outline"
-								size="md"
-								width="140px"
-							>
-								Reset
-							</Button>
-						</HStack>
-
-						<HStack spacing={12} justify="center" mt={6} mb={4}>
-							<Box textAlign="center" minW="100px">
-								<Box fontSize="md" color="gray.500" mb={2}>
-									Average
-								</Box>
-								<Box fontSize="3xl" fontWeight="bold" color="brand.500">
-									{stats?.average ?? "-"}
-								</Box>
+					<Button
+						leftIcon={
+							<Box as="span" fontSize="lg">
+								🔗
 							</Box>
-							<Box textAlign="center" minW="100px">
-								<Box fontSize="md" color="gray.500" mb={2}>
-									Median
-								</Box>
-								<Box fontSize="3xl" fontWeight="bold" color="brand.500">
-									{stats?.median ?? "-"}
-								</Box>
-							</Box>
-							<Box textAlign="center" minW="100px">
-								<Box fontSize="md" color="gray.500" mb={2}>
-									Max
-								</Box>
-								<Box fontSize="3xl" fontWeight="bold" color="brand.500">
-									{stats?.max ?? "-"}
-								</Box>
-							</Box>
-						</HStack>
-					</Box>
+						}
+						colorScheme="brand"
+						variant="ghost"
+						size="sm"
+						onClick={() => {
+							// 現在のURLをクリップボードにコピー
+							navigator.clipboard.writeText(window.location.href);
+						}}
+					>
+						Share
+					</Button>
+				</Box>
 
-					<Box flex="1" overflowY="auto">
-						<Box
-							sx={{
-								display: "grid",
-								gridTemplateColumns: {
-									base: "repeat(4, 60px)",
-									md: "repeat(6, 60px)",
-								},
-								gap: "1rem",
-								justifyContent: "center",
-								maxWidth: {
-									base: "calc(60px * 4 + 1rem * 3)",
-									md: "calc(60px * 6 + 1rem * 5)",
-								},
-								margin: "0 auto",
-							}}
-						>
-							{cards.map((card) => (
-								<Card
-									key={card.id}
-									id={card.id}
-									value={card.value}
-									isOpen={card.isOpen}
-									name={card.name}
-									isSorted={card.isSorted}
-								/>
-							))}
+				<Box px={8} flex="1" display="flex" flexDirection="column" pb="120px">
+					<VStack spacing="6" flex="1" align="stretch">
+						<Box>
+							<HStack spacing={4} justify="center">
+								<Button
+									onClick={handleOpenAll}
+									isDisabled={cards.length === 0}
+									colorScheme="brand"
+									size="md"
+									width="140px"
+								>
+									Open All Cards
+								</Button>
+								<Button
+									onClick={onOpen}
+									isDisabled={cards.length === 0}
+									colorScheme="red"
+									variant="outline"
+									size="md"
+									width="140px"
+								>
+									Reset
+								</Button>
+							</HStack>
+
+							<HStack spacing={12} justify="center" mt={6} mb={4}>
+								<Box textAlign="center" minW="100px">
+									<Box fontSize="md" color="gray.500" mb={2}>
+										Average
+									</Box>
+									<Box fontSize="3xl" fontWeight="bold" color="brand.500">
+										{stats?.average ?? "-"}
+									</Box>
+								</Box>
+								<Box textAlign="center" minW="100px">
+									<Box fontSize="md" color="gray.500" mb={2}>
+										Median
+									</Box>
+									<Box fontSize="3xl" fontWeight="bold" color="brand.500">
+										{stats?.median ?? "-"}
+									</Box>
+								</Box>
+								<Box textAlign="center" minW="100px">
+									<Box fontSize="md" color="gray.500" mb={2}>
+										Max
+									</Box>
+									<Box fontSize="3xl" fontWeight="bold" color="brand.500">
+										{stats?.max ?? "-"}
+									</Box>
+								</Box>
+							</HStack>
 						</Box>
-					</Box>
-				</VStack>
+
+						<Box flex="1">
+							<Box
+								sx={{
+									display: "grid",
+									gridTemplateColumns: {
+										base: "repeat(4, 60px)",
+										md: "repeat(6, 60px)",
+									},
+									gap: "1rem",
+									justifyContent: "center",
+									maxWidth: {
+										base: "calc(60px * 4 + 1rem * 3)",
+										md: "calc(60px * 6 + 1rem * 5)",
+									},
+									margin: "0 auto",
+								}}
+							>
+								{cards.map((card) => (
+									<Card
+										key={card.id}
+										id={card.id}
+										value={card.value}
+										isOpen={card.isOpen}
+										name={card.name}
+										isSorted={card.isSorted}
+									/>
+								))}
+							</Box>
+						</Box>
+					</VStack>
+				</Box>
 
 				<Box
 					position="fixed"
 					bottom={0}
 					left={0}
 					right={0}
-					bg="gray.50"
+					bg="white"
 					p={4}
-					borderTop="1px"
-					borderColor="gray.200"
 					zIndex={1}
 				>
 					<Container maxW="container.lg">
@@ -316,7 +332,11 @@ const Home: NextPage = () => {
 										h="12"
 										fontSize="xl"
 									>
-										{value}
+										{value === "☕" ? (
+											<Coffee02Icon color="currentColor" />
+										) : (
+											value
+										)}
 									</Button>
 								</WrapItem>
 							))}
@@ -329,9 +349,10 @@ const Home: NextPage = () => {
 				isOpen={isOpen}
 				leastDestructiveRef={cancelRef}
 				onClose={onClose}
+				isCentered
 			>
 				<AlertDialogOverlay>
-					<AlertDialogContent>
+					<AlertDialogContent mx={4}>
 						<AlertDialogHeader fontSize="lg" fontWeight="bold">
 							Are you sure?
 						</AlertDialogHeader>

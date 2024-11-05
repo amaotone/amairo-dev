@@ -1,4 +1,5 @@
 import anime from "animejs";
+import { Coffee02Icon } from "hugeicons-react";
 import { type FC, useEffect, useState } from "react";
 
 interface CardProps {
@@ -146,7 +147,9 @@ export const Card: FC<CardProps> = ({ id, value, isOpen, name, isSorted }) => {
 				<div id={id} style={styles.card}>
 					<div style={styles.cardBack} />
 					<div style={styles.cardFront}>
-						<div style={{ fontSize: "24px", fontWeight: "bold" }}>{value}</div>
+						<div style={{ fontSize: "xl", fontWeight: "bold" }}>
+							{value === "☕" ? <Coffee02Icon color="currentColor" /> : value}
+						</div>
 					</div>
 				</div>
 			</div>

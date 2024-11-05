@@ -65,6 +65,7 @@ interface CardType {
 	value: CardValue;
 	isOpen: boolean;
 	name: string;
+	isSorted: boolean;
 }
 
 const calculateStats = (cards: CardType[]) => {
@@ -92,6 +93,7 @@ const calculateStats = (cards: CardType[]) => {
 
 const Home: NextPage = () => {
 	const [cards, setCards] = useState<CardType[]>([]);
+	const [isSorting, setIsSorting] = useState(false);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -101,17 +103,64 @@ const Home: NextPage = () => {
 			value: selectedValue,
 			isOpen: false,
 			name: getRandomName(),
+			isSorted: false,
 		};
 		setCards((prev) => [...prev, newCard]);
 	};
 
+	const sortCards = () => {
+		setIsSorting(true);
+		const sortedCards = [...cards]
+			.sort((a, b) => {
+				if (typeof a.value === "number" && typeof b.value === "number") {
+					return a.value - b.value;
+				}
+				if (typeof a.value === "number") return -1;
+				if (typeof b.value === "number") return 1;
+				return 0;
+			})
+			.map((card) => ({ ...card, isOpen: true }));
+
+		// アニメーション完了までの時間を延長
+		setTimeout(() => {
+			setIsSorting(false);
+		}, 900); // アニメーション時間 + 余裕を持たせた時間
+
+		setCards(sortedCards);
+	};
+
 	const handleOpenAll = () => {
+		let delay = 0;
 		cards.forEach((card, index) => {
 			setTimeout(() => {
 				setCards((prev) =>
 					prev.map((c) => (c.id === card.id ? { ...c, isOpen: true } : c)),
 				);
-			}, index * 50);
+				// 最後のカードが開いた後にソートを実行
+				if (index === cards.length - 1) {
+					setTimeout(() => {
+						const sortedCards = [...cards]
+							.sort((a, b) => {
+								if (
+									typeof a.value === "number" &&
+									typeof b.value === "number"
+								) {
+									return a.value - b.value;
+								}
+								if (typeof a.value === "number") return -1;
+								if (typeof b.value === "number") return 1;
+								return 0;
+							})
+							.map((card) => ({
+								...card,
+								isOpen: true,
+								isSorted: true,
+							}));
+						setCards(sortedCards);
+					}, 500);
+				}
+			}, delay);
+			delay += 50;
 		});
 	};
 
@@ -236,6 +285,7 @@ const Home: NextPage = () => {
 									value={card.value}
 									isOpen={card.isOpen}
 									name={card.name}
+									isSorted={card.isSorted}
 								/>
 							))}
 						</Box>

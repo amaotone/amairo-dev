@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-import { useBreakpointValue } from "@chakra-ui/react";
 import anime from "animejs";
 import { Coffee02Icon } from "hugeicons-react";
 import { type FC, useEffect, useState } from "react";
@@ -112,10 +111,11 @@ export const Card: FC<CardProps> = ({
 						alignItems="center"
 						justifyContent="center"
 						border="2px solid"
-						borderColor="gray.300"
+						borderColor="brand.400"
 						borderRadius="8px"
 						transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-						bg="brand.500"
+						bgGradient="linear(to-br, brand.400, brand.500, brand.600)"
+						boxShadow="inset 0 0 10px rgba(0, 0, 0, 0.1)"
 						transform="rotateY(180deg)"
 					/>
 					<Box
@@ -127,15 +127,43 @@ export const Card: FC<CardProps> = ({
 						alignItems="center"
 						justifyContent="center"
 						border="2px solid"
-						borderColor="gray.300"
+						borderColor={
+							value === "☕"
+								? "brown.200"
+								: value === "?"
+									? "purple.200"
+									: "brand.200"
+						}
 						borderRadius="8px"
 						transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-						bg="white"
+						bg={
+							value === "☕" ? "#FDF6E3" : value === "?" ? "#FAF5FF" : "white"
+						}
 						flexDirection="column"
 						visibility={isOpen ? "visible" : "hidden"}
 					>
-						<Box fontSize={{ base: "lg", md: "3xl" }} fontWeight="bold">
-							{value === "☕" ? <Coffee02Icon color="currentColor" /> : value}
+						<Box
+							fontSize={{ base: "lg", md: "3xl" }}
+							fontWeight="bold"
+							color={
+								value === "☕"
+									? "brown.600"
+									: value === "?"
+										? "purple.600"
+										: "inherit"
+							}
+						>
+							{value === "☕" ? (
+								<Coffee02Icon
+									style={{
+										width: "1.2em",
+										height: "1.2em",
+									}}
+									color="#5D4037"
+								/>
+							) : (
+								value
+							)}
 						</Box>
 					</Box>
 				</Box>

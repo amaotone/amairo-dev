@@ -7,14 +7,7 @@ interface CardSelectorProps {
 }
 
 export const CardSelector: React.FC<CardSelectorProps> = ({ onSelect }) => (
-	<Box
-		bg="white"
-		py={4}
-		px={4}
-		borderTop="1px solid"
-		borderColor="gray.100"
-		flexShrink={0}
-	>
+	<Box bg="white" py={4} px={4} flexShrink={0}>
 		<Container maxW="container.lg">
 			<HStack gap={2} justify="center" flexWrap="wrap">
 				{CARD_VALUES.map((value) => (

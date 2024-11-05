@@ -9,8 +9,6 @@ export const Header: React.FC = () => (
 		justifyContent="space-between"
 		alignItems="center"
 		h="52px"
-		borderBottom="1px solid"
-		borderColor="gray.100"
 		flexShrink={0}
 	>
 		<HStack spacing={2}>

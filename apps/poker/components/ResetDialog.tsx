@@ -31,7 +31,7 @@ export const ResetDialog = ({ isOpen, onClose, onReset }: ResetDialogProps) => {
 						Are you sure?
 					</AlertDialogHeader>
 					<AlertDialogBody>This will reset all cards.</AlertDialogBody>
-					<AlertDialogFooter justifyContent="center">
+					<AlertDialogFooter>
 						<Button ref={cancelRef} onClick={onClose}>
 							Cancel
 						</Button>

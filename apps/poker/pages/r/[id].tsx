@@ -12,68 +12,64 @@ import { useCards } from "../../hooks/useCards";
 import { useResetDialog } from "../../hooks/useResetDialog";
 
 const Room: NextPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const { cards, addCard, openAllCards, resetCards } = useCards();
-  const { isOpen, openDialog, closeDialog } = useResetDialog();
+	const router = useRouter();
+	const { id } = router.query;
+	const { cards, addCard, openAllCards, resetCards } = useCards();
+	const { isOpen, openDialog, closeDialog } = useResetDialog();
 
-  const handleReset = () => {
-    resetCards();
-    closeDialog();
-  };
+	const handleReset = () => {
+		resetCards();
+		closeDialog();
+	};
 
-  return (
-    <>
-      <Head>
-        <title>Planning Poker - Room {id}</title>
-        <meta name="description" content="Planning Poker Room" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	return (
+		<>
+			<Head>
+				<title>Planning Poker - Room {id}</title>
+				<meta name="description" content="Planning Poker Room" />
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
 
-      <Container
-        minH="100dvh"
-        maxW="container.lg"
-        p={0}
-        display="flex"
-        flexDirection="column"
-      >
-        <Header />
+			<Container
+				minH="100dvh"
+				maxW="container.lg"
+				p={0}
+				display="flex"
+				flexDirection="column"
+			>
+				<Header />
 
-        <Box
-          px={8}
-          flex="1"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          overflow="auto"
-        >
-          <VStack gap={8} align="stretch">
-            <Box>
-              <ActionButtons
-                onOpenAll={openAllCards}
-                onNext={openDialog}
-                disabled={cards.length === 0}
-              />
+				<Box
+					px={8}
+					flex="1"
+					display="flex"
+					flexDirection="column"
+					justifyContent="center"
+					overflow="auto"
+				>
+					<VStack gap={8} align="stretch">
+						<Box>
+							<ActionButtons onOpenAll={openAllCards} onNext={openDialog} />
 
-              <Stats cards={cards} />
-            </Box>
+							<Stats cards={cards} />
+						</Box>
 
-            <Box>
-              <CardGrid cards={cards} />
-            </Box>
-          </VStack>
-        </Box>
+						<Box>
+							<CardGrid cards={cards} />
+						</Box>
+					</VStack>
+				</Box>
 
-        <CardSelector onSelect={addCard} />
-      </Container>
+				<CardSelector onSelect={addCard} />
+			</Container>
 
-      <ResetDialog
-        isOpen={isOpen}
-        onClose={closeDialog}
-        onReset={handleReset}
-      />
-    </>
-  );
+			<ResetDialog
+				isOpen={isOpen}
+				onClose={closeDialog}
+				onReset={handleReset}
+			/>
+		</>
+	);
 };
 
 export default Room;

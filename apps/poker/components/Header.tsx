@@ -1,14 +1,34 @@
-import { Box, Button, HStack, Heading, useDisclosure } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	HStack,
+	Heading,
+	useClipboard,
+	useDisclosure,
+	useToast,
+} from "@chakra-ui/react";
 import { Cards01Icon, Share01Icon } from "hugeicons-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ShareDialog } from "./ShareDialog";
 
 export const Header: React.FC = () => {
 	const router = useRouter();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const toast = useToast();
+	const { onCopy } = useClipboard(
+		typeof window !== "undefined" ? window.location.href : "",
+	);
 
-	const handleLogoClick = () => {
-		router.push("/");
+	const handleShareClick = () => {
+		onCopy();
+		toast({
+			title: "URL copied!",
+			status: "success",
+			colorScheme: "brand",
+			duration: 2000,
+			position: "top",
+		});
 	};
 
 	return (
@@ -21,21 +41,23 @@ export const Header: React.FC = () => {
 			h="60px"
 			flexShrink={0}
 		>
-			<Button
-				colorScheme="brand"
-				size="md"
-				variant="ghost"
-				onClick={handleLogoClick}
-				leftIcon={<Cards01Icon size={24} />}
-				fontWeight="bold"
-			>
-				PlanningPoker
-			</Button>
+			<Link href="/" passHref style={{ textDecoration: "none" }}>
+				<Button
+					as="span"
+					colorScheme="brand"
+					size="md"
+					variant="ghost"
+					leftIcon={<Cards01Icon size={24} />}
+					fontWeight="bold"
+				>
+					PlanningPoker
+				</Button>
+			</Link>
 			<Button
 				colorScheme="brand"
 				variant="ghost"
 				size="sm"
-				onClick={onOpen}
+				onClick={handleShareClick}
 				leftIcon={<Share01Icon size={16} />}
 			>
 				Share

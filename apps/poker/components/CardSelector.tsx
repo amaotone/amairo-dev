@@ -13,8 +13,11 @@ const getButtonStyle = (value: CardValue) => {
 			borderColor: "brown.300",
 			bg: "#FDF6E3",
 			color: "#5D4037",
+			transition: "all 0.2s ease-in-out",
 			_hover: {
 				bg: "#F5EBD7",
+				transform: "translateY(-4px)",
+				boxShadow: "lg",
 			},
 		};
 	}
@@ -24,8 +27,11 @@ const getButtonStyle = (value: CardValue) => {
 			borderColor: "purple.100",
 			bg: "#FAF5FF",
 			color: "purple.700",
+			transition: "all 0.2s ease-in-out",
 			_hover: {
 				bg: "#F3E8FF",
+				transform: "translateY(-4px)",
+				boxShadow: "lg",
 			},
 		};
 	}
@@ -34,8 +40,11 @@ const getButtonStyle = (value: CardValue) => {
 		borderColor: "brand.100",
 		bg: "white",
 		color: "brand.700",
+		transition: "all 0.2s ease-in-out",
 		_hover: {
 			bg: "gray.50",
+			transform: "translateY(-4px)",
+			boxShadow: "lg",
 		},
 	};
 };

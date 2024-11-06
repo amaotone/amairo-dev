@@ -1,8 +1,9 @@
-import { Box, Button, Container, HStack, VStack } from "@chakra-ui/react";
+import { Box, Container, HStack, VStack } from "@chakra-ui/react";
 import { Idea01Icon, NextIcon } from "hugeicons-react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { ActionButtons } from "../components/ActionButtons";
 import { CardGrid } from "../components/CardGrid";
 import { CardSelector } from "../components/CardSelector";
 import { Header } from "../components/Header";
@@ -122,7 +123,7 @@ const Home: NextPage = () => {
 			</Head>
 
 			<Container
-				minH="100vh"
+				minH="100dvh"
 				maxW="container.lg"
 				bg="white"
 				p={0}
@@ -141,29 +142,11 @@ const Home: NextPage = () => {
 				>
 					<VStack gap={8} align="stretch">
 						<Box>
-							<HStack gap={4} justify="center">
-								<Button
-									onClick={handleOpenAll}
-									disabled={cards.length === 0}
-									colorScheme="brand"
-									size="md"
-									width="140px"
-									leftIcon={<Idea01Icon size={20} />}
-								>
-									Open
-								</Button>
-								<Button
-									onClick={() => setIsOpen(true)}
-									disabled={cards.length === 0}
-									colorScheme="gray"
-									variant="outline"
-									size="md"
-									width="140px"
-									leftIcon={<NextIcon size={20} />}
-								>
-									Next
-								</Button>
-							</HStack>
+							<ActionButtons
+								onOpenAll={handleOpenAll}
+								onNext={() => setIsOpen(true)}
+								disabled={cards.length === 0}
+							/>
 
 							<Stats cards={cards} />
 						</Box>

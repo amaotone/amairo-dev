@@ -58,9 +58,9 @@ export const Stats = ({ cards }: StatsProps) => {
 
 	return (
 		<HStack gap={{ base: 6, md: 12 }} justify="center" mt={8}>
-			<StatItem label="Average" value={stats?.average ?? "-"} />
-			<StatItem label="Median" value={stats?.median ?? "-"} />
-			<StatItem label="Max" value={stats?.max ?? "-"} />
+			<StatItem label="Average" value={stats?.average ?? "--"} />
+			<StatItem label="Median" value={stats?.median ?? "--"} />
+			<StatItem label="Max" value={stats?.max ?? "--"} />
 		</HStack>
 	);
 };

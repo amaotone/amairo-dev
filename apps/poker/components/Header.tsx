@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
 	return (
 		<Box
 			py={2}
-			px={8}
+			px={{ base: 2, md: 8 }}
 			display="flex"
 			justifyContent="space-between"
 			alignItems="center"
@@ -44,7 +44,8 @@ export const Header: React.FC = () => {
 				<Button
 					as="span"
 					colorScheme="brand"
-					size="md"
+					size="sm"
+					fontSize="md"
 					variant="ghost"
 					leftIcon={<Cards01Icon size={24} />}
 					fontWeight="bold"

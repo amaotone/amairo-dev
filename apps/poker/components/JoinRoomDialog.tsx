@@ -65,7 +65,7 @@ export const JoinRoomDialog = ({ isOpen, roomId, userId, onJoin }: Props) => {
 			isCentered
 		>
 			<ModalOverlay />
-			<ModalContent as="form" onSubmit={handleSubmit}>
+			<ModalContent as="form" onSubmit={handleSubmit} mx="4">
 				<ModalHeader>Join Room</ModalHeader>
 				<ModalBody>
 					<FormControl isRequired>

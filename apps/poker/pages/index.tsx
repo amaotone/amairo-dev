@@ -1,117 +1,22 @@
-import { Box, Container, HStack, VStack } from "@chakra-ui/react";
-import { Idea01Icon, NextIcon } from "hugeicons-react";
+import { Box, Container, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 import { ActionButtons } from "../components/ActionButtons";
 import { CardGrid } from "../components/CardGrid";
 import { CardSelector } from "../components/CardSelector";
 import { Header } from "../components/Header";
 import { ResetDialog } from "../components/ResetDialog";
 import { Stats } from "../components/Stats";
-import type { CardType, CardValue } from "../types";
-
-const NAMES = [
-	"Alice",
-	"Bob",
-	"Charlie",
-	"Dave",
-	"Eve",
-	"Frank",
-	"Grace",
-	"Henry",
-	"Ivy",
-	"Jack",
-	"Kelly",
-	"Liam",
-	"Mia",
-	"Noah",
-	"Olivia",
-	"Peter",
-	"Quinn",
-	"Ruby",
-	"Sam",
-	"Tara",
-	"Uma",
-	"Victor",
-	"Wendy",
-	"Xander",
-	"Yuki",
-	"Zoe",
-	"Christopher Alexander",
-	"Elizabeth Windsor",
-	"Benjamin Franklin",
-	"Alexandria Ocasio",
-] as const;
-
-const getRandomName = (): string => {
-	const randomIndex = Math.floor(Math.random() * NAMES.length);
-	return NAMES[randomIndex];
-};
+import { useCards } from "../hooks/useCards";
+import { useResetDialog } from "../hooks/useResetDialog";
 
 const Home: NextPage = () => {
-	const [cards, setCards] = useState<CardType[]>([]);
-	const [isSorting, setIsSorting] = useState(false);
-	const [isOpen, setIsOpen] = useState(false);
-
-	const handleAddCard = (selectedValue: CardValue) => {
-		const newCard: CardType = {
-			id: `card-${Date.now()}`,
-			value: selectedValue,
-			isOpen: false,
-			name: getRandomName(),
-			isSorted: false,
-		};
-		setCards((prev) => [...prev, newCard]);
-	};
-
-	const handleOpenAll = () => {
-		let delay = 0;
-		cards.forEach((card, index) => {
-			setTimeout(() => {
-				setCards((prev) =>
-					prev.map((c) => (c.id === card.id ? { ...c, isOpen: true } : c)),
-				);
-				// 最後のカードが開いた後にソートを実行
-				if (index === cards.length - 1) {
-					setTimeout(() => {
-						const sortedCards = [...cards]
-							.sort((a, b) => {
-								// 数値同士の比較
-								if (
-									typeof a.value === "number" &&
-									typeof b.value === "number"
-								) {
-									return a.value - b.value;
-								}
-								// 数値を文字列より前に
-								if (typeof a.value === "number") return -1;
-								if (typeof b.value === "number") return 1;
-								// ☕を最後に
-								if (a.value === "☕") return 1;
-								if (b.value === "☕") return -1;
-								// ?を☕の前に
-								if (a.value === "?") return -1;
-								if (b.value === "?") return 1;
-								// ここまでこない（型安全のため）
-								return 0;
-							})
-							.map((card) => ({
-								...card,
-								isOpen: true,
-								isSorted: true,
-							}));
-						setCards(sortedCards);
-					}, 500);
-				}
-			}, delay);
-			delay += 50;
-		});
-	};
+	const { cards, addCard, openAllCards, resetCards } = useCards();
+	const { isOpen, openDialog, closeDialog } = useResetDialog();
 
 	const handleReset = () => {
-		setCards([]);
-		setIsOpen(false);
+		resetCards();
+		closeDialog();
 	};
 
 	return (
@@ -143,8 +48,8 @@ const Home: NextPage = () => {
 					<VStack gap={8} align="stretch">
 						<Box>
 							<ActionButtons
-								onOpenAll={handleOpenAll}
-								onNext={() => setIsOpen(true)}
+								onOpenAll={openAllCards}
+								onNext={openDialog}
 								disabled={cards.length === 0}
 							/>
 
@@ -157,12 +62,12 @@ const Home: NextPage = () => {
 					</VStack>
 				</Box>
 
-				<CardSelector onSelect={handleAddCard} />
+				<CardSelector onSelect={addCard} />
 			</Container>
 
 			<ResetDialog
 				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
+				onClose={closeDialog}
 				onReset={handleReset}
 			/>
 		</>

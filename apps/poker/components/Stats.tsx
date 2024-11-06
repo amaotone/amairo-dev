@@ -1,5 +1,5 @@
 import { Box, HStack } from "@chakra-ui/react";
-import type { CardType } from "../types";
+import type { CardType } from "../utils/types";
 
 interface StatsProps {
 	cards: CardType[];
@@ -38,7 +38,7 @@ const StatItem = ({ label, value }: { label: string; value: string }) => (
 	<Box textAlign="center" minW={{ base: "80px", md: "100px" }}>
 		<Box
 			fontSize={{ base: "sm", md: "md" }}
-			color="gray.500"
+			color="gray.700"
 			mb={{ base: 1, md: 2 }}
 		>
 			{label}

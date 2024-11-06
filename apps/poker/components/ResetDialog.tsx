@@ -36,7 +36,7 @@ export const ResetDialog = ({ isOpen, onClose, onReset }: ResetDialogProps) => {
 							Cancel
 						</Button>
 						<Button colorScheme="brand" onClick={onReset} ml={3}>
-							Go Next
+							Next
 						</Button>
 					</AlertDialogFooter>
 				</AlertDialogContent>

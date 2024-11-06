@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import anime from "animejs";
 import { Coffee02Icon } from "hugeicons-react";
 import { type FC, useEffect, useState } from "react";
-import type { CardValue } from "../types";
+import type { CardValue } from "../utils/types";
 
 interface CardStyle {
 	borderColor: string;
@@ -84,12 +84,11 @@ const animateInitialAppearance = (id: string, onComplete: () => void) => {
 		.add({
 			targets: `#${id}-name`,
 			opacity: [0, 1],
-			duration: 300,
+			duration: 200,
 			begin: () => {
 				const nameElement = document.getElementById(`${id}-name`);
 				if (nameElement) nameElement.style.opacity = "0";
 			},
-			delay: 100,
 		});
 };
 
@@ -98,11 +97,11 @@ const animateSortedAppearance = (id: string) => {
 	if (!element) return;
 
 	element.style.opacity = "0";
-	element.style.transform = "translateY(-50px)";
+	element.style.transform = "translateY(-30px)";
 
 	anime({
 		targets: element,
-		translateY: [-50, 0],
+		translateY: [-30, 0],
 		opacity: [0, 1],
 		duration: 500,
 		easing: "easeOutBounce",
@@ -195,7 +194,7 @@ export const Card: FC<CardProps> = ({
 			<Box
 				id={`${id}-name`}
 				fontSize={{ base: "xs", md: "sm" }}
-				color="gray.500"
+				color="gray.700"
 				fontWeight="500"
 				opacity={0}
 				mt={2}

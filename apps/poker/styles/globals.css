@@ -1,21 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Zen+Maru+Gothic&display=swap");
 
 canvas {
-  margin: 0 !important;
-  padding: 0 !important;
-  vertical-align: middle !important;
-  display: inline !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0 !important;
+	padding: 0 !important;
+	vertical-align: middle !important;
+	display: inline !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  line-height: 0.7 !important;
+	line-height: 0.7 !important;
 }
 
 [contenteditable="true"]:empty::after {
-  content: attr(placeholder);
-  display: "block";
-  opacity: 0.5;
-  white-space: "pre-wrap";
+	content: attr(placeholder);
+	display: "block";
+	opacity: 0.5;
+	white-space: "pre-wrap";
 }

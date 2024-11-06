@@ -4,19 +4,13 @@ import { Idea01Icon, NextIcon } from "hugeicons-react";
 type ActionButtonsProps = {
 	onOpenAll: () => void;
 	onNext: () => void;
-	disabled: boolean;
 };
 
-export const ActionButtons = ({
-	onOpenAll,
-	onNext,
-	disabled,
-}: ActionButtonsProps) => {
+export const ActionButtons = ({ onOpenAll, onNext }: ActionButtonsProps) => {
 	return (
 		<HStack gap={4} justify="center">
 			<Button
 				onClick={onOpenAll}
-				disabled={disabled}
 				colorScheme="brand"
 				size="md"
 				width="140px"
@@ -26,8 +20,7 @@ export const ActionButtons = ({
 			</Button>
 			<Button
 				onClick={onNext}
-				disabled={disabled}
-				colorScheme="gray"
+				colorScheme="brand"
 				variant="outline"
 				size="md"
 				width="140px"

@@ -1,5 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import type { CardType } from "../types";
+import type { CardType } from "../utils/types";
 import { Card } from "./Card";
 
 interface CardGridProps {

@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rooms/{roomId} {
+      // 読み取り権限: 誰でも可能
+      allow read: if true;
+      
+      // 作成権限: 必須フィールドの検証
+      allow create: if 
+        request.resource.data.keys().hasAll(['createdAt', 'lastOpenedAt']) &&
+        request.resource.data.createdAt is timestamp &&
+        request.resource.data.lastOpenedAt is timestamp;
+      
+      // 更新権限: lastOpenedAtのみ更新可能
+      allow update: if 
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['lastOpenedAt']) &&
+        request.resource.data.lastOpenedAt is timestamp;
+      
+      // メンバーのサブコレクション
+      match /members/{userId} {
+        allow read: if true;
+        
+        // メンバーの作成・更新権限
+        allow create, update: if 
+          request.resource.data.keys().hasAll(['name']) &&
+          request.resource.data.name is string &&
+          (
+            !request.resource.data.keys().hasAll(['selectedCard']) ||
+            request.resource.data.selectedCard == null ||
+            request.resource.data.selectedCard is string
+          );
+          
+        // メンバーの削除権限
+        allow delete: if true;
+      }
+    }
+  }
+} 

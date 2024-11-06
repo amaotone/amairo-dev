@@ -37,8 +37,10 @@
 		"animejs": "^3.2.2",
 		"dom-to-image": "2.6.0",
 		"dom-to-image-more": "2.16.0",
+		"firebase": "^10.7.0",
 		"html2canvas": "1.4.1",
 		"hugeicons-react": "^0.3.0",
+		"nanoid": "^5.0.8",
 		"react-icons": "4.10.1"
 	}
 }

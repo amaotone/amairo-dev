@@ -10,7 +10,6 @@ import {
 import { Cards01Icon, Share01Icon } from "hugeicons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ShareDialog } from "./ShareDialog";
 
 export const Header: React.FC = () => {
 	const router = useRouter();
@@ -62,7 +61,6 @@ export const Header: React.FC = () => {
 			>
 				Share
 			</Button>
-			<ShareDialog isOpen={isOpen} onClose={onClose} />
 		</Box>
 	);
 };

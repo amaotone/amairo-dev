@@ -56,8 +56,8 @@ importers:
         specifier: ^4.5.10
         version: 4.5.10
       '@neoconfetti/svelte':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^2.2.1
+        version: 2.2.1
       '@sveltejs/adapter-auto':
         specifier: ^2.0.0
         version: 2.1.1(@sveltejs/kit@1.30.4(svelte@4.2.19)(vite@4.5.5(@types/node@22.9.0)))
@@ -1740,8 +1740,8 @@ packages:
     peerDependencies:
       svelte: '>=3 <5'
 
-  '@neoconfetti/svelte@1.0.0':
-    resolution: {integrity: sha512-SmksyaJAdSlMa9cTidVSIqYo1qti+WTsviNDwgjNVm+KQ3DRP2Df9umDIzC4vCcpEYY+chQe0i2IKnLw03AT8Q==}
+  '@neoconfetti/svelte@2.2.1':
+    resolution: {integrity: sha512-2Ts0Rxaf6clW2qG+AKhTwpl01AAyZEAe03XeuQ7Vp+qYIaM3ycuI94j546fmEkUxwACwGI3Zl2cZ/pncTuNcJg==}
 
   '@next/env@15.0.2':
     resolution: {integrity: sha512-c0Zr0ModK5OX7D4ZV8Jt/wqoXtitLNPwUfG9zElCZztdaZyNVnN40rDXVZ/+FGuR4CcNV5AEfM6N8f+Ener7Dg==}
@@ -6959,7 +6959,7 @@ snapshots:
       nanoid: 4.0.2
       svelte: 4.2.19
 
-  '@neoconfetti/svelte@1.0.0': {}
+  '@neoconfetti/svelte@2.2.1': {}
 
   '@next/env@15.0.2': {}
 

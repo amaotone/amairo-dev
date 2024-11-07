@@ -20,7 +20,7 @@
 		"@chakra-ui/react": "2.7.1",
 		"@types/dom-to-image": "2.6.4",
 		"dom-to-image": "2.6.0",
-		"dom-to-image-more": "2.16.0",
+		"dom-to-image-more": "3.5.0",
 		"html2canvas": "1.4.1",
 		"react-icons": "4.10.1",
 		"next": "^15.0.2",

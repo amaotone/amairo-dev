@@ -64,9 +64,6 @@ importers:
       '@sveltejs/kit':
         specifier: ^1.20.4
         version: 1.30.4(svelte@4.2.19)(vite@4.5.5(@types/node@22.9.0))
-      '@types/cookie':
-        specifier: ^0.5.1
-        version: 0.5.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.0.0
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@9.14.0(jiti@2.4.0))(typescript@5.6.3))(eslint@9.14.0(jiti@2.4.0))(typescript@5.6.3)
@@ -139,6 +136,15 @@ importers:
       html2canvas:
         specifier: 1.4.1
         version: 1.4.1
+      next:
+        specifier: ^15.0.2
+        version: 15.0.2(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       react-icons:
         specifier: 4.10.1
         version: 4.10.1(react@18.3.1)

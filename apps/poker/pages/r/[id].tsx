@@ -1,6 +1,8 @@
 import {
 	Box,
+	Center,
 	Container,
+	Spinner,
 	VStack,
 	useDisclosure,
 	useToast,
@@ -103,9 +105,28 @@ export default function RoomPage() {
 		closeDialog();
 	};
 
-	// userIdが設定されていない場合はローディング表示
+	// ローディング表示の修正
 	if (!userId || isLoading) {
-		return <div>Loading...</div>;
+		return (
+			<Container
+				minH="100dvh"
+				maxW="container.lg"
+				p={0}
+				display="flex"
+				flexDirection="column"
+			>
+				<Header />
+				<Center flex="1">
+					<Spinner
+						thickness="4px"
+						speed="0.65s"
+						emptyColor="gray.200"
+						color="blue.500"
+						size="xl"
+					/>
+				</Center>
+			</Container>
+		);
 	}
 
 	return (

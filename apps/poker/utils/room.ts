@@ -1,16 +1,13 @@
 import { customAlphabet } from "nanoid";
 
-// 使用する文字セットを定義（nanoidのデフォルトに合わせる）
-const NANOID_ALPHABET =
-	"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
-const ROOM_ID_LENGTH = 12;
+export const ID_ALPHABET = "6789BCDFGHJKLMNPQRTWbcdfghjkmnpqrtwz";
+export const ID_LENGTH = 12;
 
-// nanoidの設定
-export const generateRoomId = customAlphabet(NANOID_ALPHABET, ROOM_ID_LENGTH);
-
-// バリデーション用の正規表現
-export const ROOM_ID_PATTERN = /^[A-Za-z0-9_-]{12}$/;
+export const generateId = customAlphabet(ID_ALPHABET, ID_LENGTH);
+export const ROOM_ID_PATTERN = new RegExp(`^[${ID_ALPHABET}]{${ID_LENGTH}}$`);
 
 export const isValidRoomId = (id: string): boolean => {
+	if (!id) return false;
+	if (id.length !== ID_LENGTH) return false;
 	return ROOM_ID_PATTERN.test(id);
 };

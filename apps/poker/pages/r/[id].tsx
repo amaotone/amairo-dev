@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useAtomValue } from "jotai";
+import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -23,10 +24,24 @@ import { useCards } from "../../hooks/useCards";
 import { userIdAtom } from "../../stores/user";
 import type { Room, RoomMember } from "../../utils/firebase";
 import { db } from "../../utils/firebase-config";
+import { isValidRoomId } from "../../utils/room";
 
-export default function RoomPage() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+	const roomId = context.params?.id as string;
+
+	if (!isValidRoomId(roomId)) {
+		console.error(`Invalid room ID: ${roomId}`);
+		return {
+			redirect: { destination: "/", permanent: false },
+			props: { invalidPath: true },
+		};
+	}
+
+	return { props: { roomId } };
+}
+
+export default function RoomPage({ roomId }: { roomId: string }) {
 	const router = useRouter();
-	const { id: roomId } = router.query;
 	const [room, setRoom] = useState<Room | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const userId = useAtomValue(userIdAtom);

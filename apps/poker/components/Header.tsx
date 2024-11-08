@@ -1,19 +1,8 @@
-import {
-	Box,
-	Button,
-	HStack,
-	Heading,
-	useClipboard,
-	useDisclosure,
-	useToast,
-} from "@chakra-ui/react";
-import { Cards01Icon, Share01Icon } from "hugeicons-react";
+import { Box, Button, useClipboard, useToast } from "@chakra-ui/react";
+import { Cards01Icon, Share08Icon } from "hugeicons-react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export const Header: React.FC = () => {
-	const router = useRouter();
-	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
 	const { onCopy } = useClipboard(
 		typeof window !== "undefined" ? window.location.href : "",
@@ -32,8 +21,7 @@ export const Header: React.FC = () => {
 
 	return (
 		<Box
-			py={2}
-			px={{ base: 2, md: 8 }}
+			p={2}
 			display="flex"
 			justifyContent="space-between"
 			alignItems="center"
@@ -58,7 +46,7 @@ export const Header: React.FC = () => {
 				variant="ghost"
 				size="sm"
 				onClick={handleShareClick}
-				leftIcon={<Share01Icon size={16} />}
+				leftIcon={<Share08Icon size={16} />}
 			>
 				Share
 			</Button>

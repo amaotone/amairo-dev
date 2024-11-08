@@ -8,6 +8,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { doc, onSnapshot } from "firebase/firestore";
+import { useAtomValue } from "jotai";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -19,35 +20,20 @@ import { JoinRoomDialog } from "../../components/JoinRoomDialog";
 import { ResetDialog } from "../../components/ResetDialog";
 import { Stats } from "../../components/Stats";
 import { useCards } from "../../hooks/useCards";
-import { getRoom, updateMember } from "../../utils/firebase";
+import { userIdAtom } from "../../stores/user";
 import type { Room, RoomMember } from "../../utils/firebase";
 import { db } from "../../utils/firebase-config";
-
-// ユーザーIDを生成する関数
-const generateUserId = () => crypto.randomUUID();
 
 export default function RoomPage() {
 	const router = useRouter();
 	const { id: roomId } = router.query;
 	const [room, setRoom] = useState<Room | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
-	const [userId, setUserId] = useState<string>("");
+	const userId = useAtomValue(userIdAtom);
 	const [currentMember, setCurrentMember] = useState<RoomMember | null>(null);
 	const toast = useToast();
 	const { isOpen, onOpen: openDialog, onClose: closeDialog } = useDisclosure();
 	const { cards, addCard, openAllCards, resetCards } = useCards();
-
-	// クライアントサイドでのみユーザーIDを初期化
-	useEffect(() => {
-		const storedUserId = localStorage.getItem("userId");
-		const newUserId = storedUserId || generateUserId();
-
-		if (!storedUserId) {
-			localStorage.setItem("userId", newUserId);
-		}
-
-		setUserId(newUserId);
-	}, []);
 
 	// 部屋の購読（userIdが設定された後のみ実行）
 	useEffect(() => {
@@ -106,7 +92,7 @@ export default function RoomPage() {
 	};
 
 	// ローディング表示の修正
-	if (!userId || isLoading) {
+	if (isLoading) {
 		return (
 			<Container
 				minH="100dvh"

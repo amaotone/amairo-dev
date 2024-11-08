@@ -1,9 +1,8 @@
 import { atomWithStorage } from "jotai/utils";
-import { generateId } from "../utils/id";
 
-export const userIdAtom = atomWithStorage<string>(
+export const userIdAtom = atomWithStorage<string | null>(
 	"userId",
-	generateId(),
+	null,
 	undefined,
 	{ getOnInit: true },
 );

@@ -8,7 +8,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { doc, onSnapshot } from "firebase/firestore";
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -24,7 +24,7 @@ import { useCards } from "../../hooks/useCards";
 import { userIdAtom } from "../../stores/user";
 import type { Room, RoomMember } from "../../utils/firebase";
 import { db } from "../../utils/firebase-config";
-import { isValidId } from "../../utils/id";
+import { generateId, isValidId } from "../../utils/id";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { id } = context.query;
@@ -44,10 +44,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		},
 	};
 };
-
-export default function RoomPage({ roomId }: { roomId: string }) {
+export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	const router = useRouter();
-	const userId = useAtomValue(userIdAtom);
+	const [userId, setUserId] = useAtom(userIdAtom);
 	const [room, setRoom] = useState<Room | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [currentMember, setCurrentMember] = useState<RoomMember | null>(null);
@@ -55,9 +54,14 @@ export default function RoomPage({ roomId }: { roomId: string }) {
 	const { isOpen, onOpen: openDialog, onClose: closeDialog } = useDisclosure();
 	const { cards, addCard, openAllCards, resetCards } = useCards();
 
-	// 部屋の購読（userIdが設定された後のみ実行）
 	useEffect(() => {
-		if (!roomId) return;
+		if (!userId) {
+			setUserId(generateId());
+		}
+	}, [userId, setUserId]);
+
+	useEffect(() => {
+		if (!roomId || !userId) return;
 
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId as string),
@@ -90,21 +94,42 @@ export default function RoomPage({ roomId }: { roomId: string }) {
 		);
 
 		return () => unsubscribe();
-	}, [roomId, router, toast]);
+	}, [roomId, router, toast, userId]);
 
-	// メンバー情報の購読（userIdが設定された後のみ実行）
+	// メンバー情報の購読を修正
 	useEffect(() => {
-		if (!roomId) return;
+		if (!roomId || !userId) return;
 
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId, "members", userId),
 			(doc) => {
-				setCurrentMember(doc.exists() ? (doc.data() as RoomMember) : null);
+				if (doc.exists()) {
+					// 既存のメンバーの場合
+					const memberData = doc.data() as RoomMember;
+					setCurrentMember(memberData);
+					toast({
+						title: `Welcome ${memberData.name}!`,
+						status: "success",
+						duration: 3000,
+						position: "top",
+						colorScheme: "brand",
+					});
+				} else {
+					setCurrentMember(null);
+				}
+			},
+			(error) => {
+				console.error("Error fetching member:", error);
+				toast({
+					title: "メンバー情報の取得に失敗しました",
+					status: "error",
+					duration: 3000,
+				});
 			},
 		);
 
 		return () => unsubscribe();
-	}, [roomId, userId]);
+	}, [roomId, userId, toast]);
 
 	const handleReset = async () => {
 		resetCards();
@@ -185,7 +210,7 @@ export default function RoomPage({ roomId }: { roomId: string }) {
 			<JoinRoomDialog
 				isOpen={!currentMember && !isLoading}
 				roomId={roomId as string}
-				userId={userId}
+				userId={userId as string}
 				onJoin={() => {
 					// メンバーの更新は自動的に検知されるため
 					// 特に何もする必要はありません

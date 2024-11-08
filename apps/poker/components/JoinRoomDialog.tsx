@@ -36,13 +36,6 @@ export const JoinRoomDialog = ({ isOpen, roomId, userId, onJoin }: Props) => {
 				selectedCard: null,
 			});
 			onJoin();
-			toast({
-				title: "Welcome!",
-				status: "success",
-				colorScheme: "brand",
-				position: "top",
-				duration: 3000,
-			});
 		} catch (error) {
 			console.error("Failed to join room:", error);
 			toast({

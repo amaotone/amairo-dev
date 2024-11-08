@@ -22,6 +22,15 @@ const HomePage = () => {
 			});
 			router.replace("/", undefined, { shallow: true });
 		}
+		if (error === "create_room_failed") {
+			toast({
+				title: "Failed to create room",
+				status: "error",
+				duration: 5000,
+				position: "top",
+			});
+			router.replace("/", undefined, { shallow: true });
+		}
 	}, [router.query, toast, router]);
 
 	const handleCreateRoom = async () => {
@@ -31,6 +40,7 @@ const HomePage = () => {
 			router.push(`/r/${roomId}`);
 		} catch (error) {
 			console.error("Failed to create room:", error);
+			router.push("/?error=create_room_failed");
 		}
 	};
 

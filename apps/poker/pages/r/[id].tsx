@@ -10,7 +10,6 @@ import {
 import { doc, onSnapshot } from "firebase/firestore";
 import { useAtom } from "jotai";
 import type { GetServerSideProps } from "next";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ActionButtons } from "../../components/ActionButtons";
@@ -44,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		},
 	};
 };
+
 export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	const router = useRouter();
 	const [userId, setUserId] = useAtom(userIdAtom);
@@ -61,7 +61,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	}, [userId, setUserId]);
 
 	useEffect(() => {
-		if (!roomId || !userId) return;
+		if (!userId) return;
 
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId as string),
@@ -98,7 +98,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 
 	// メンバー情報の購読を修正
 	useEffect(() => {
-		if (!roomId || !userId) return;
+		if (!userId) return;
 
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId, "members", userId),
@@ -136,7 +136,6 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		closeDialog();
 	};
 
-	// ローディング表示の修正
 	if (isLoading) {
 		return (
 			<Container
@@ -162,12 +161,6 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 
 	return (
 		<>
-			<Head>
-				<title>Planning Poker</title>
-				<meta name="description" content="Planning Poker Room" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-
 			<Container
 				minH="100dvh"
 				maxW="container.lg"
@@ -211,10 +204,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 				isOpen={!currentMember && !isLoading}
 				roomId={roomId as string}
 				userId={userId as string}
-				onJoin={() => {
-					// メンバーの更新は自動的に検知されるため
-					// 特に何もする必要はありません
-				}}
+				onJoin={() => {}}
 			/>
 		</>
 	);

@@ -198,8 +198,8 @@ importers:
         specifier: ^0.9.4
         version: 0.9.8
       chart.js:
-        specifier: ^3.9.1
-        version: 3.9.1
+        specifier: ^4.4.6
+        version: 4.4.6
       next:
         specifier: ^15.0.2
         version: 15.0.2(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -211,7 +211,7 @@ importers:
         version: 18.3.1
       react-chartjs-2:
         specifier: ^4.3.1
-        version: 4.3.1(chart.js@3.9.1)(react@18.3.1)
+        version: 4.3.1(chart.js@4.4.6)(react@18.3.1)
       react-dom:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
@@ -1501,6 +1501,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
+  '@kurkle/color@0.3.2':
+    resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
+
   '@next/env@15.0.2':
     resolution: {integrity: sha512-c0Zr0ModK5OX7D4ZV8Jt/wqoXtitLNPwUfG9zElCZztdaZyNVnN40rDXVZ/+FGuR4CcNV5AEfM6N8f+Ener7Dg==}
 
@@ -2090,8 +2093,9 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
-  chart.js@3.9.1:
-    resolution: {integrity: sha512-Ro2JbLmvg83gXF5F4sniaQ+lTbSv18E+TIf2cOeiH1Iqd2PGFOtem+DUufMZsCJwFE7ywPOpfXFBwRTGq7dh6w==}
+  chart.js@4.4.6:
+    resolution: {integrity: sha512-8Y406zevUPbbIBA/HRk33khEmQPk5+cxeflWE/2rx1NJsjVWMPw/9mSP9rxHP5eqi6LNoPBVMfZHxbwLSgldYA==}
+    engines: {pnpm: '>=8'}
 
   check-error@2.1.1:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
@@ -6004,6 +6008,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@kurkle/color@0.3.2': {}
+
   '@next/env@15.0.2': {}
 
   '@next/eslint-plugin-next@15.0.2':
@@ -6598,7 +6604,9 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chart.js@3.9.1: {}
+  chart.js@4.4.6:
+    dependencies:
+      '@kurkle/color': 0.3.2
 
   check-error@2.1.1: {}
 
@@ -7941,9 +7949,9 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-chartjs-2@4.3.1(chart.js@3.9.1)(react@18.3.1):
+  react-chartjs-2@4.3.1(chart.js@4.4.6)(react@18.3.1):
     dependencies:
-      chart.js: 3.9.1
+      chart.js: 4.4.6
       react: 18.3.1
 
   react-clientside-effect@1.2.6(react@18.3.1):

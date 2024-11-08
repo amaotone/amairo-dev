@@ -1,7 +1,5 @@
 import {
 	type Timestamp,
-	addDoc,
-	collection,
 	doc,
 	getDoc,
 	serverTimestamp,
@@ -23,14 +21,12 @@ export interface Room {
 }
 
 // 部屋の作成
-export const createRoom = async (): Promise<string> => {
-	const roomData = {
+export const createRoom = async (roomId: string): Promise<string> => {
+	const roomRef = doc(db, "rooms", roomId);
+	await setDoc(roomRef, {
 		createdAt: serverTimestamp(),
-		lastOpenedAt: serverTimestamp(),
-	};
-
-	const docRef = await addDoc(collection(db, "rooms"), roomData);
-	return docRef.id;
+	});
+	return roomId;
 };
 
 // 部屋の取得

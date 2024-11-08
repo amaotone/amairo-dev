@@ -1,38 +1,42 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
+    // ルームのドキュメントに対するルール
     match /rooms/{roomId} {
-      // 読み取り権限: 誰でも可能
+      // 読み取り: 誰でも可能
       allow read: if true;
       
-      // 作成権限: 必須フィールドの検証
+      // 作成: 誰でも可能だが、必要なフィールドのみ許可
       allow create: if 
-        request.resource.data.keys().hasAll(['createdAt', 'lastOpenedAt']) &&
-        request.resource.data.createdAt is timestamp &&
-        request.resource.data.lastOpenedAt is timestamp;
+        // 必須フィールドの存在確認
+        request.resource.data.keys().hasOnly(['createdAt']) &&
+        // createdAtがサーバータイムスタンプであることを確認
+        request.resource.data.createdAt == request.time;
       
-      // 更新権限: lastOpenedAtのみ更新可能
-      allow update: if 
-        request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['lastOpenedAt']) &&
-        request.resource.data.lastOpenedAt is timestamp;
-      
-      // メンバーのサブコレクション
-      match /members/{userId} {
+      // 更新: lastOpenedAtの更新のみ許可
+      allow update: if
+        // 更新可能なフィールドの制限
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastOpenedAt', "status"]) &&
+        // lastOpenedAtがサーバータイムスタンプであることを確認
+        request.resource.data.lastOpenedAt == request.time;
+
+      // メンバーのサブコレクションに対するルール
+      match /members/{memberId} {
+        // 読み取り: 誰でも可能
         allow read: if true;
         
-        // メンバーの作成・更新権限
-        allow create, update: if 
-          request.resource.data.keys().hasAll(['name']) &&
+        // 作成・更新: 必要なフィールドのみ許可
+        allow write: if
+          // 必須フィールドの存在確認
+          request.resource.data.keys().hasOnly(['name', 'selectedCard']) &&
+          // nameは文字列で1文字以上
           request.resource.data.name is string &&
-          (
-            !request.resource.data.keys().hasAll(['selectedCard']) ||
-            request.resource.data.selectedCard == null ||
-            request.resource.data.selectedCard is string
-          );
-          
-        // メンバーの削除権限
-        allow delete: if true;
+          request.resource.data.name.size() > 0 &&
+          // selectedCardは文字列またはnull
+          (request.resource.data.selectedCard == null ||
+           (request.resource.data.selectedCard is string &&
+            request.resource.data.selectedCard.size() > 0));
       }
     }
   }

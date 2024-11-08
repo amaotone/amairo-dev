@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useAtomValue } from "jotai";
-import type { GetServerSidePropsContext } from "next";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -24,27 +24,32 @@ import { useCards } from "../../hooks/useCards";
 import { userIdAtom } from "../../stores/user";
 import type { Room, RoomMember } from "../../utils/firebase";
 import { db } from "../../utils/firebase-config";
-import { isValidRoomId } from "../../utils/room";
+import { isValidId } from "../../utils/id";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const roomId = context.params?.id as string;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const { id } = context.query;
 
-	if (!isValidRoomId(roomId)) {
-		console.error(`Invalid room ID: ${roomId}`);
+	if (typeof id !== "string" || !isValidId(id)) {
 		return {
-			redirect: { destination: "/", permanent: false },
-			props: { invalidPath: true },
+			redirect: {
+				destination: "/?error=invalid_room_id",
+				permanent: false,
+			},
 		};
 	}
 
-	return { props: { roomId } };
-}
+	return {
+		props: {
+			roomId: id,
+		},
+	};
+};
 
 export default function RoomPage({ roomId }: { roomId: string }) {
 	const router = useRouter();
+	const userId = useAtomValue(userIdAtom);
 	const [room, setRoom] = useState<Room | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
-	const userId = useAtomValue(userIdAtom);
 	const [currentMember, setCurrentMember] = useState<RoomMember | null>(null);
 	const toast = useToast();
 	const { isOpen, onOpen: openDialog, onClose: closeDialog } = useDisclosure();
@@ -52,7 +57,7 @@ export default function RoomPage({ roomId }: { roomId: string }) {
 
 	// 部屋の購読（userIdが設定された後のみ実行）
 	useEffect(() => {
-		if (!roomId || !userId) return;
+		if (!roomId) return;
 
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId as string),
@@ -85,14 +90,14 @@ export default function RoomPage({ roomId }: { roomId: string }) {
 		);
 
 		return () => unsubscribe();
-	}, [roomId, router, toast, userId]);
+	}, [roomId, router, toast]);
 
 	// メンバー情報の購読（userIdが設定された後のみ実行）
 	useEffect(() => {
-		if (!roomId || !userId) return;
+		if (!roomId) return;
 
 		const unsubscribe = onSnapshot(
-			doc(db, "rooms", roomId as string, "members", userId),
+			doc(db, "rooms", roomId, "members", userId),
 			(doc) => {
 				setCurrentMember(doc.exists() ? (doc.data() as RoomMember) : null);
 			},

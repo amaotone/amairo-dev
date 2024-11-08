@@ -1,14 +1,33 @@
 import { Box, Button, Container, Heading } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { Cards01Icon } from "hugeicons-react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { createRoom } from "../utils/firebase";
+import { generateId } from "../utils/id";
 
 const HomePage = () => {
 	const router = useRouter();
+	const toast = useToast();
+
+	useEffect(() => {
+		const { error } = router.query;
+
+		if (error === "invalid_room_id") {
+			toast({
+				title: "Invalid Room ID",
+				status: "error",
+				duration: 5000,
+				position: "top",
+			});
+			router.replace("/", undefined, { shallow: true });
+		}
+	}, [router.query, toast, router]);
 
 	const handleCreateRoom = async () => {
 		try {
-			const roomId = await createRoom();
+			const roomId = generateId();
+			await createRoom(roomId);
 			router.push(`/r/${roomId}`);
 		} catch (error) {
 			console.error("Failed to create room:", error);

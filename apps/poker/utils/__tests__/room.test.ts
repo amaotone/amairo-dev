@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ID_LENGTH, generateId, isValidRoomId } from "../room";
+import { ID_LENGTH, generateId, isValidId } from "../id";
 
 describe("room utils", () => {
 	describe("generateId", () => {
@@ -10,7 +10,7 @@ describe("room utils", () => {
 
 		it("生成されたIDが有効なIDとして判定される", () => {
 			const id = generateId();
-			expect(isValidRoomId(id)).toBe(true);
+			expect(isValidId(id)).toBe(true);
 		});
 
 		it("複数回生成しても一意のIDが生成される", () => {
@@ -31,7 +31,7 @@ describe("room utils", () => {
 			];
 
 			for (const id of validIds) {
-				expect(isValidRoomId(id)).toBe(true);
+				expect(isValidId(id)).toBe(true);
 			}
 		});
 
@@ -47,15 +47,15 @@ describe("room utils", () => {
 			];
 
 			for (const id of invalidIds) {
-				expect(isValidRoomId(id)).toBe(false);
+				expect(isValidId(id)).toBe(false);
 			}
 		});
 
 		it("nullやundefinedを渡した場合にfalseを返す", () => {
 			// @ts-expect-error: 意図的に不正な型の値を渡してテスト
-			expect(isValidRoomId(null)).toBe(false);
+			expect(isValidId(null)).toBe(false);
 			// @ts-expect-error: 意図的に不正な型の値を渡してテスト
-			expect(isValidRoomId(undefined)).toBe(false);
+			expect(isValidId(undefined)).toBe(false);
 		});
 	});
 });

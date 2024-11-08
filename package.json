@@ -22,7 +22,7 @@
   },
   "engines": {
     "pnpm": ">=9.1.0",
-    "node": ">=v20.11.0"
+    "node": ">=22.11.0"
   },
   "resolutions": {
     "@types/react": "18.3.12"

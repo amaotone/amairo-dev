@@ -14,12 +14,9 @@ service cloud.firestore {
         // createdAtがサーバータイムスタンプであることを確認
         request.resource.data.createdAt == request.time;
       
-      // 更新: lastOpenedAtの更新のみ許可
       allow update: if
-        // 更新可能なフィールドの制限
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastOpenedAt', "status"]) &&
-        // lastOpenedAtがサーバータイムスタンプであることを確認
-        request.resource.data.lastOpenedAt == request.time;
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['expireAt', 'isVoting']);
 
       // メンバーのサブコレクションに対するルール
       match /members/{memberId} {

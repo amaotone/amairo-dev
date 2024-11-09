@@ -1,4 +1,5 @@
 import {
+	Timestamp as FirestoreTimestamp,
 	type Timestamp,
 	doc,
 	getDoc,
@@ -16,11 +17,11 @@ export interface RoomMember {
 export interface Room {
 	id: string;
 	createdAt: Timestamp;
-	lastOpenedAt: Timestamp;
+	expireAt: Timestamp;
+	isVoting: boolean;
 	members?: Record<string, RoomMember>;
 }
 
-// 部屋の作成
 export const createRoom = async (roomId: string): Promise<string> => {
 	const roomRef = doc(db, "rooms", roomId);
 	const result = await setDoc(roomRef, {
@@ -30,7 +31,6 @@ export const createRoom = async (roomId: string): Promise<string> => {
 	return roomId;
 };
 
-// 部屋の取得
 export const getRoom = async (roomId: string): Promise<Room | null> => {
 	const docRef = doc(db, "rooms", roomId);
 	const docSnap = await getDoc(docRef);
@@ -52,10 +52,21 @@ export const updateMember = async (
 	memberData: RoomMember,
 ) => {
 	const memberRef = doc(db, "rooms", roomId, "members", userId);
-	await setDoc(memberRef, memberData);
+	const roomRef = doc(db, "rooms", roomId);
+
+	// 1日後のタイムスタンプを作成
+	const tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+
+	// メンバーの更新とexpireAtの設定を同時に行う
+	await Promise.all([
+		setDoc(memberRef, memberData),
+		updateDoc(roomRef, {
+			expireAt: FirestoreTimestamp.fromDate(tomorrow),
+		}),
+	]);
 };
 
-// カードの選択
 export const selectCard = async (
 	roomId: string,
 	userId: string,
@@ -67,7 +78,6 @@ export const selectCard = async (
 	});
 };
 
-// カードを開く（lastOpenedAtを更新）
 export const openCards = async (roomId: string) => {
 	const roomRef = doc(db, "rooms", roomId);
 	await updateDoc(roomRef, {

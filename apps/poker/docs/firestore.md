@@ -3,6 +3,7 @@
 - /rooms
   - {roomId}
     - createdAt: timestamp
+    - expireAt: timestamp
     - isVoting: boolean
     - /members
       - {userId}

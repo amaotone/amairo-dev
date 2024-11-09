@@ -1,35 +1,49 @@
 import { useToast } from "@chakra-ui/react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../utils/firebase-config";
 import type { Room, RoomMember } from "../utils/room";
+import { createRoom } from "../utils/room";
 
 export function useRoom(roomId: string, userId: string | null) {
 	const [room, setRoom] = useState<Room | null>(null);
 	const [currentMember, setCurrentMember] = useState<RoomMember | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 	const toast = useToast();
 
-	// 部屋の購読
+	// 部屋の取得または作成と購読
 	useEffect(() => {
+		const fetchOrCreateRoom = async () => {
+			const roomRef = doc(db, "rooms", roomId);
+			const roomDoc = await getDoc(roomRef);
+
+			if (!roomDoc.exists()) {
+				const newRoom = createRoom(roomId);
+				await setDoc(roomRef, newRoom);
+			}
+		};
+
+		fetchOrCreateRoom().catch((error) => {
+			console.error("Error creating/fetching room:", error);
+			toast({
+				title: "Error creating/fetching room",
+				status: "error",
+				duration: 3000,
+			});
+			setError("error_create_room");
+		});
+
+		// 部屋のsubscribe
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId),
 			(doc) => {
-				if (!doc.exists()) {
-					toast({
-						title: "Room not found",
-						status: "error",
-						duration: 3000,
-					});
-					throw new Error("Room not found");
-				}
-
 				const roomData = {
 					id: doc.id,
 					...doc.data(),
 				} as Room;
 				setRoom(roomData);
-				setIsLoading(false);
+				setLoading(false);
 			},
 			(error) => {
 				console.error("Error fetching room:", error);
@@ -38,6 +52,7 @@ export function useRoom(roomId: string, userId: string | null) {
 					status: "error",
 					duration: 3000,
 				});
+				setError("error_fetch_room");
 			},
 		);
 
@@ -63,6 +78,7 @@ export function useRoom(roomId: string, userId: string | null) {
 					});
 				} else {
 					setCurrentMember(null);
+					setError("error_fetch_member");
 				}
 			},
 			(error) => {
@@ -72,6 +88,7 @@ export function useRoom(roomId: string, userId: string | null) {
 					status: "error",
 					duration: 3000,
 				});
+				setError("error_fetch_member");
 			},
 		);
 
@@ -81,6 +98,7 @@ export function useRoom(roomId: string, userId: string | null) {
 	return {
 		room,
 		currentMember,
-		isLoading,
+		loading,
+		error,
 	};
 }

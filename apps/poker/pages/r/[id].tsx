@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import type { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ActionButtons } from "../../components/ActionButtons";
 import { CardGrid } from "../../components/CardGrid";
@@ -43,7 +42,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function RoomPageComponent({ roomId }: { roomId: string }) {
-	const router = useRouter();
 	const [userId, setUserId] = useAtom(userIdAtom);
 	const { cards, addCard, openAllCards, resetCards } = useCards();
 	const { isOpen, onOpen: openDialog, onClose: closeDialog } = useDisclosure();
@@ -54,14 +52,14 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		}
 	}, [userId, setUserId]);
 
-	const { room, currentMember, isLoading } = useRoom(roomId, userId);
+	const { room, currentMember, loading, error } = useRoom(roomId, userId);
 
 	const handleReset = async () => {
 		resetCards();
 		closeDialog();
 	};
 
-	if (isLoading) {
+	if (loading) {
 		return (
 			<Container
 				minH="100dvh"
@@ -126,7 +124,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 			/>
 
 			<JoinRoomDialog
-				isOpen={!currentMember && !isLoading}
+				isOpen={!currentMember && !loading}
 				roomId={roomId as string}
 				userId={userId as string}
 				onJoin={() => {}}

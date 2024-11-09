@@ -1,56 +1,62 @@
 import { useToast } from "@chakra-ui/react";
-import {
-	collection,
-	doc,
-	getDoc,
-	onSnapshot,
-	setDoc,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import type { Member, Room } from "../models/room";
+import { createRoom, memberConverter, roomConverter } from "../models/room";
 import { db } from "../utils/firebase-config";
-import type { Member, MemberDoc, Room } from "../utils/room";
-import { createRoom } from "../utils/room";
+
+interface RoomState {
+	room: Room | null;
+	currentMember: Member | null;
+	members: Member[];
+	loading: boolean;
+	error: string | null;
+}
+
+const initialState: RoomState = {
+	room: null,
+	currentMember: null,
+	members: [],
+	loading: true,
+	error: null,
+};
 
 export function useRoom(roomId: string, userId: string | null) {
-	const [room, setRoom] = useState<Room | null>(null);
-	const [currentMember, setCurrentMember] = useState<Member | null>(null);
-	const [members, setMembers] = useState<Member[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const [state, setState] = useState<RoomState>(initialState);
 	const toast = useToast();
 
-	// 部屋の取得または作成と購読
+	// 部屋の購読
 	useEffect(() => {
-		const fetchOrCreateRoom = async () => {
-			const roomRef = doc(db, "rooms", roomId);
-			const roomDoc = await getDoc(roomRef);
+		const roomRef = doc(db, "rooms", roomId).withConverter(roomConverter);
 
-			if (!roomDoc.exists()) {
-				const newRoom = createRoom(roomId);
-				await setDoc(roomRef, newRoom);
+		// 部屋が存在しない場合は作成
+		const initializeRoom = async () => {
+			try {
+				await createRoom(roomId);
+			} catch (error) {
+				console.error("Error creating room:", error);
+				toast({
+					title: "Error creating room",
+					status: "error",
+					duration: 3000,
+				});
+				setState((prev) => ({ ...prev, error: "error_create_room" }));
 			}
 		};
 
-		fetchOrCreateRoom().catch((error) => {
-			console.error("Error creating/fetching room:", error);
-			toast({
-				title: "Error creating/fetching room",
-				status: "error",
-				duration: 3000,
-			});
-			setError("error_create_room");
-		});
-
-		// 部屋のsubscribe
 		const unsubscribe = onSnapshot(
-			doc(db, "rooms", roomId),
+			roomRef,
 			(doc) => {
-				const roomData = {
-					id: doc.id,
-					...doc.data(),
-				} as Room;
-				setRoom(roomData);
-				setLoading(false);
+				if (!doc.exists()) {
+					initializeRoom();
+					return;
+				}
+
+				setState((prev) => ({
+					...prev,
+					room: doc.data(),
+					loading: false,
+				}));
 			},
 			(error) => {
 				console.error("Error fetching room:", error);
@@ -59,7 +65,7 @@ export function useRoom(roomId: string, userId: string | null) {
 					status: "error",
 					duration: 3000,
 				});
-				setError("error_fetch_room");
+				setState((prev) => ({ ...prev, error: "error_fetch_room" }));
 			},
 		);
 
@@ -70,25 +76,22 @@ export function useRoom(roomId: string, userId: string | null) {
 	useEffect(() => {
 		if (!userId) return;
 
+		const memberRef = doc(db, "rooms", roomId, "members", userId).withConverter(
+			memberConverter,
+		);
 		const unsubscribe = onSnapshot(
-			doc(db, "rooms", roomId, "members", userId),
+			memberRef,
 			(doc) => {
 				if (doc.exists()) {
-					const memberData = doc.data() as MemberDoc;
-					setCurrentMember({
-						id: doc.id,
-						...memberData,
-					});
+					const member = doc.data();
+					setState((prev) => ({ ...prev, currentMember: member }));
 					toast({
-						title: `Welcome ${memberData.name}!`,
+						title: `Welcome ${member.name}!`,
 						status: "success",
 						duration: 3000,
 						position: "top",
 						colorScheme: "brand",
 					});
-				} else {
-					setCurrentMember(null);
-					setError("error_fetch_member");
 				}
 			},
 			(error) => {
@@ -98,23 +101,23 @@ export function useRoom(roomId: string, userId: string | null) {
 					status: "error",
 					duration: 3000,
 				});
-				setError("error_fetch_member");
+				setState((prev) => ({ ...prev, error: "error_fetch_member" }));
 			},
 		);
 
 		return () => unsubscribe();
 	}, [roomId, userId, toast]);
 
-	// メンバー一覧の購読を追加
+	// メンバー一覧の購読
 	useEffect(() => {
+		const membersRef = collection(db, "rooms", roomId, "members").withConverter(
+			memberConverter,
+		);
 		const unsubscribe = onSnapshot(
-			collection(db, "rooms", roomId, "members"),
+			membersRef,
 			(snapshot) => {
-				const membersList = snapshot.docs.map((doc) => ({
-					id: doc.id,
-					...doc.data(),
-				})) as Member[];
-				setMembers(membersList);
+				const members = snapshot.docs.map((doc) => doc.data());
+				setState((prev) => ({ ...prev, members }));
 			},
 			(error) => {
 				console.error("Error fetching members:", error);
@@ -123,18 +126,12 @@ export function useRoom(roomId: string, userId: string | null) {
 					status: "error",
 					duration: 3000,
 				});
-				setError("error_fetch_members");
+				setState((prev) => ({ ...prev, error: "error_fetch_members" }));
 			},
 		);
 
 		return () => unsubscribe();
 	}, [roomId, toast]);
 
-	return {
-		room,
-		currentMember,
-		members,
-		loading,
-		error,
-	};
+	return state;
 }

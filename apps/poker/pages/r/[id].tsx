@@ -21,7 +21,6 @@ import { useCards } from "../../hooks/useCards";
 import { useRoom } from "../../hooks/useRoom";
 import { userIdAtom } from "../../stores/user";
 import { generateId, isValidId } from "../../utils/id";
-import type {} from "../../utils/room";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { id } = context.query;

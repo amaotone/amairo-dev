@@ -1,7 +1,8 @@
-import "@testing-library/jest-dom";
-import { cleanup } from "@testing-library/react";
-import { afterEach } from "vitest";
+import axios from "axios";
+import { afterAll } from "vitest";
 
-afterEach(() => {
-	cleanup();
+afterAll(async () => {
+	await axios.delete(
+		"http://127.0.0.1:8080/emulator/v1/projects/test/databases/(default)/documents",
+	);
 });

@@ -23,9 +23,10 @@ export interface Room {
 // 部屋の作成
 export const createRoom = async (roomId: string): Promise<string> => {
 	const roomRef = doc(db, "rooms", roomId);
-	await setDoc(roomRef, {
+	const result = await setDoc(roomRef, {
 		createdAt: serverTimestamp(),
 	});
+	console.log(result);
 	return roomId;
 };
 

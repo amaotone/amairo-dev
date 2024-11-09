@@ -7,12 +7,13 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"test": "vitest",
-		"test:coverage": "vitest run --coverage"
+		"test": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 vitest",
+		"test:coverage": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 vitest run --coverage"
 	},
 	"devDependencies": {
 		"@amairo-dev/tsconfig": "workspace:*",
 		"@biomejs/biome": "1.9.4",
+		"@firebase/rules-unit-testing": "^4.0.0",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/react": "^16.0.1",
@@ -21,6 +22,7 @@
 		"@types/react-dom": "18.3.1",
 		"@vitejs/plugin-react": "^4.3.3",
 		"autoprefixer": "^10.4.20",
+		"dotenv": "^16.4.5",
 		"eslint": "9.14.0",
 		"eslint-config-next": "15.0.2",
 		"jsdom": "^25.0.1",
@@ -33,9 +35,11 @@
 	"dependencies": {
 		"@chakra-ui/icons": "2.2.4",
 		"@chakra-ui/react": "^2.7.1",
+		"@firebase/firestore": "^4.7.4",
 		"@types/animejs": "^3.1.12",
 		"@types/dom-to-image": "2.6.7",
 		"animejs": "^3.2.2",
+		"axios": "^1.7.7",
 		"dom-to-image": "2.6.0",
 		"dom-to-image-more": "3.5.0",
 		"firebase": "^11.0.1",

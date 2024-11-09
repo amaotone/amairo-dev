@@ -11,7 +11,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { updateMember } from "../utils/firebase";
+import { updateMember } from "../utils/room";
 
 interface Props {
 	isOpen: boolean;

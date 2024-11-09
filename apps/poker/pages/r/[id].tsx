@@ -61,14 +61,12 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	}, [userId, setUserId]);
 
 	useEffect(() => {
-		if (!userId) return;
-
 		const unsubscribe = onSnapshot(
 			doc(db, "rooms", roomId as string),
 			async (doc) => {
 				if (!doc.exists()) {
 					toast({
-						title: "部屋が見つかりません",
+						title: "Room not found",
 						status: "error",
 						duration: 3000,
 					});
@@ -86,7 +84,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 			(error) => {
 				console.error("Error fetching room:", error);
 				toast({
-					title: "エラーが発生しました",
+					title: "Error fetching room",
 					status: "error",
 					duration: 3000,
 				});
@@ -94,9 +92,8 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		);
 
 		return () => unsubscribe();
-	}, [roomId, router, toast, userId]);
+	}, [roomId, router, toast]);
 
-	// メンバー情報の購読を修正
 	useEffect(() => {
 		if (!userId) return;
 
@@ -104,7 +101,6 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 			doc(db, "rooms", roomId, "members", userId),
 			(doc) => {
 				if (doc.exists()) {
-					// 既存のメンバーの場合
 					const memberData = doc.data() as RoomMember;
 					setCurrentMember(memberData);
 					toast({
@@ -121,7 +117,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 			(error) => {
 				console.error("Error fetching member:", error);
 				toast({
-					title: "メンバー情報の取得に失敗しました",
+					title: "Failed to fetch member information",
 					status: "error",
 					duration: 3000,
 				});

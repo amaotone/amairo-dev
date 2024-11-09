@@ -2,7 +2,7 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
 import { describe, expect, it } from "vitest";
 import { db } from "../../utils/firebase-config";
-import { createRoom } from "../../utils/room";
+import { type MemberDoc, createRoom } from "../../utils/room";
 import { useRoom } from "../useRoom";
 
 const roomId = "test-room";
@@ -41,11 +41,9 @@ describe("useRoom", () => {
 	});
 
 	it("メンバー情報を正しく取得できること", async () => {
-		// テスト用の部屋を作成
 		await createRoom(roomId);
 
-		// テスト用のメンバーデータを作成
-		const memberData = {
+		const memberData: MemberDoc = {
 			name: "Test User",
 			selectedCard: null,
 		};
@@ -54,15 +52,14 @@ describe("useRoom", () => {
 
 		const { result } = renderHook(() => useRoom(roomId, userId));
 
-		// メンバー情報が取得されるまで待機
 		await waitFor(() => {
 			expect(result.current.currentMember).not.toBeNull();
 		});
 
-		expect(result.current.currentMember?.name).toBe(memberData.name);
-		expect(result.current.currentMember?.selectedCard).toBe(
-			memberData.selectedCard,
-		);
+		expect(result.current.currentMember).toEqual({
+			id: userId,
+			...memberData,
+		});
 	});
 
 	it("userIdがnullの場合、メンバー情報を取得しないこと", async () => {
@@ -77,5 +74,81 @@ describe("useRoom", () => {
 		});
 
 		expect(result.current.currentMember).toBeNull();
+	});
+
+	it("部屋の全メンバーを取得できること", async () => {
+		await createRoom(roomId);
+
+		const membersData = [
+			{
+				id: "user1",
+				name: "User 1",
+				selectedCard: null,
+			},
+			{
+				id: "user2",
+				name: "User 2",
+				selectedCard: "5",
+			},
+			{
+				id: "user3",
+				name: "User 3",
+				selectedCard: "8",
+			},
+		];
+
+		for (const member of membersData) {
+			const { id, ...memberDoc } = member;
+			await setDoc(doc(db, "rooms", roomId, "members", id), memberDoc);
+		}
+
+		const { result } = renderHook(() => useRoom(roomId, userId));
+
+		await waitFor(() => {
+			expect(result.current.members.length).toBe(3);
+		});
+
+		expect(result.current.members).toEqual(
+			expect.arrayContaining(
+				membersData.map((member) =>
+					expect.objectContaining({
+						id: member.id,
+						name: member.name,
+						selectedCard: member.selectedCard,
+					}),
+				),
+			),
+		);
+	});
+
+	it("メンバーが追加されたときにリアルタイムで更新されること", async () => {
+		// テスト用の部屋を作成
+		await createRoom(roomId);
+
+		const { result } = renderHook(() => useRoom(roomId, userId));
+
+		// 初期状態を確認
+		await waitFor(() => {
+			expect(result.current.members.length).toBe(0);
+		});
+
+		// 新しいメンバーを追加
+		const newMember = {
+			name: "New User",
+			selectedCard: null,
+		};
+		await setDoc(doc(db, "rooms", roomId, "members", "new-user"), newMember);
+
+		// メンバーリストが更新されるのを待機
+		await waitFor(() => {
+			expect(result.current.members.length).toBe(1);
+		});
+
+		expect(result.current.members[0]).toEqual(
+			expect.objectContaining({
+				name: "New User",
+				selectedCard: null,
+			}),
+		);
 	});
 });

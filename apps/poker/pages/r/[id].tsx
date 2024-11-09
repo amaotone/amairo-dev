@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { ActionButtons } from "../../components/ActionButtons";
 import { CardGrid } from "../../components/CardGrid";
 import { CardSelector } from "../../components/CardSelector";
+import { DebugInfo } from "../../components/DebugInfo";
 import { Header } from "../../components/Header";
 import { JoinRoomDialog } from "../../components/JoinRoomDialog";
 import { ResetDialog } from "../../components/ResetDialog";
@@ -52,7 +53,10 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		}
 	}, [userId, setUserId]);
 
-	const { room, currentMember, loading, error } = useRoom(roomId, userId);
+	const { room, members, currentMember, loading, error } = useRoom(
+		roomId,
+		userId,
+	);
 
 	const handleReset = async () => {
 		resetCards();
@@ -84,6 +88,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 
 	return (
 		<>
+			<DebugInfo room={room} members={members} currentMember={currentMember} />
 			<Container
 				minH="100dvh"
 				maxW="container.lg"
@@ -92,7 +97,6 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 				flexDirection="column"
 			>
 				<Header />
-
 				<Box
 					px={8}
 					flex="1"

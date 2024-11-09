@@ -1,5 +1,4 @@
 import {
-	Timestamp as FirestoreTimestamp,
 	type Timestamp,
 	doc,
 	getDoc,
@@ -9,7 +8,13 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase-config";
 
-export interface RoomMember {
+export interface Member {
+	id: string;
+	name: string;
+	selectedCard: string | null;
+}
+
+export interface MemberDoc {
 	name: string;
 	selectedCard: string | null;
 }
@@ -19,15 +24,14 @@ export interface Room {
 	createdAt: Timestamp;
 	expireAt: Timestamp;
 	isVoting: boolean;
-	members?: Record<string, RoomMember>;
+	members?: Record<string, Member>;
 }
 
 export const createRoom = async (roomId: string): Promise<string> => {
 	const roomRef = doc(db, "rooms", roomId);
-	const result = await setDoc(roomRef, {
+	await setDoc(roomRef, {
 		createdAt: serverTimestamp(),
 	});
-	console.log(result);
 	return roomId;
 };
 
@@ -49,22 +53,10 @@ export const getRoom = async (roomId: string): Promise<Room | null> => {
 export const updateMember = async (
 	roomId: string,
 	userId: string,
-	memberData: RoomMember,
+	member: Omit<MemberDoc, "id">,
 ) => {
 	const memberRef = doc(db, "rooms", roomId, "members", userId);
-	const roomRef = doc(db, "rooms", roomId);
-
-	// 1日後のタイムスタンプを作成
-	const tomorrow = new Date();
-	tomorrow.setDate(tomorrow.getDate() + 1);
-
-	// メンバーの更新とexpireAtの設定を同時に行う
-	await Promise.all([
-		setDoc(memberRef, memberData),
-		updateDoc(roomRef, {
-			expireAt: FirestoreTimestamp.fromDate(tomorrow),
-		}),
-	]);
+	await setDoc(memberRef, member);
 };
 
 export const selectCard = async (

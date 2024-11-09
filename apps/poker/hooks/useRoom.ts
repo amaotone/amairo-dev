@@ -1,13 +1,20 @@
 import { useToast } from "@chakra-ui/react";
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	getDoc,
+	onSnapshot,
+	setDoc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../utils/firebase-config";
-import type { Room, RoomMember } from "../utils/room";
+import type { Member, MemberDoc, Room } from "../utils/room";
 import { createRoom } from "../utils/room";
 
 export function useRoom(roomId: string, userId: string | null) {
 	const [room, setRoom] = useState<Room | null>(null);
-	const [currentMember, setCurrentMember] = useState<RoomMember | null>(null);
+	const [currentMember, setCurrentMember] = useState<Member | null>(null);
+	const [members, setMembers] = useState<Member[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const toast = useToast();
@@ -67,8 +74,11 @@ export function useRoom(roomId: string, userId: string | null) {
 			doc(db, "rooms", roomId, "members", userId),
 			(doc) => {
 				if (doc.exists()) {
-					const memberData = doc.data() as RoomMember;
-					setCurrentMember(memberData);
+					const memberData = doc.data() as MemberDoc;
+					setCurrentMember({
+						id: doc.id,
+						...memberData,
+					});
 					toast({
 						title: `Welcome ${memberData.name}!`,
 						status: "success",
@@ -95,9 +105,35 @@ export function useRoom(roomId: string, userId: string | null) {
 		return () => unsubscribe();
 	}, [roomId, userId, toast]);
 
+	// メンバー一覧の購読を追加
+	useEffect(() => {
+		const unsubscribe = onSnapshot(
+			collection(db, "rooms", roomId, "members"),
+			(snapshot) => {
+				const membersList = snapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				})) as Member[];
+				setMembers(membersList);
+			},
+			(error) => {
+				console.error("Error fetching members:", error);
+				toast({
+					title: "Failed to fetch members",
+					status: "error",
+					duration: 3000,
+				});
+				setError("error_fetch_members");
+			},
+		);
+
+		return () => unsubscribe();
+	}, [roomId, toast]);
+
 	return {
 		room,
 		currentMember,
+		members,
 		loading,
 		error,
 	};

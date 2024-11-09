@@ -100,9 +100,6 @@ importers:
       animejs:
         specifier: ^3.2.2
         version: 3.2.2
-      axios:
-        specifier: ^1.7.7
-        version: 1.7.7
       dom-to-image:
         specifier: 2.6.0
         version: 2.6.0

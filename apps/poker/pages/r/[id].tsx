@@ -20,6 +20,7 @@ import { Stats } from "../../components/Stats";
 import { useCards } from "../../hooks/useCards";
 import { useRoom } from "../../hooks/useRoom";
 import { userIdAtom } from "../../stores/user";
+import type { CardValue } from "../../types";
 import { generateId, isValidId } from "../../utils/id";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -52,7 +53,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		}
 	}, [userId, setUserId]);
 
-	const { room, members, currentMember, loading, error } = useRoom(
+	const { room, members, currentMember, loading, error, selectCard } = useRoom(
 		roomId,
 		userId,
 	);
@@ -60,6 +61,11 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	const handleReset = async () => {
 		resetCards();
 		closeDialog();
+	};
+
+	const handleCardSelect = async (value: CardValue) => {
+		if (!currentMember) return;
+		await selectCard(value);
 	};
 
 	if (loading) {
@@ -112,12 +118,12 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 						</Box>
 
 						<Box>
-							<CardGrid cards={cards} />
+							<CardGrid members={members ?? []} isOpen={isOpen} cards={cards} />
 						</Box>
 					</VStack>
 				</Box>
 
-				<CardSelector onSelect={addCard} />
+				<CardSelector onSelect={handleCardSelect} />
 			</Container>
 
 			<ResetDialog

@@ -1,12 +1,15 @@
 import { Grid, GridItem } from "@chakra-ui/react";
+import type { Member } from "../models/room";
 import type { CardType } from "../utils/types";
 import { Card } from "./Card";
 
 interface CardGridProps {
-	cards: CardType[];
+	members: Member[];
+	isOpen: boolean;
+	cards?: CardType[];
 }
 
-export const CardGrid = ({ cards }: CardGridProps) => (
+export const CardGrid = ({ members, isOpen, cards = [] }: CardGridProps) => (
 	<Grid
 		templateColumns={{
 			base: "repeat(5, 60px)",
@@ -25,21 +28,23 @@ export const CardGrid = ({ cards }: CardGridProps) => (
 		}}
 		mx="auto"
 	>
-		{cards.slice(0, 15).map((card) => (
+		{members.map((member) => (
 			<GridItem
-				key={card.id}
+				key={member.id}
 				h={{ base: "110px", md: "150px" }}
 				display="flex"
 				alignItems="flex-start"
 			>
-				<Card
-					id={card.id}
-					value={card.value}
-					isOpen={card.isOpen}
-					name={card.name}
-					isSorted={card.isSorted}
-					width={{ base: "60px", md: "80px" }}
-				/>
+				{member.selectedCard && (
+					<Card
+						id={member.id}
+						value={member.selectedCard}
+						isOpen={isOpen}
+						name={member.name}
+						isSorted={false}
+						width={{ base: "60px", md: "80px" }}
+					/>
+				)}
 			</GridItem>
 		))}
 	</Grid>

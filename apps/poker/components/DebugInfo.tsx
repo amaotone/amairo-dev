@@ -1,9 +1,9 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
-import type { Member, Room } from "../utils/room";
+import type { Member, Room } from "../models/room";
 
 interface DebugInfoProps {
 	room: Room | null;
-	members: Member[] | null;
+	members: Member[];
 	currentMember: Member | null;
 }
 

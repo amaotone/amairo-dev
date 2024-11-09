@@ -105,7 +105,7 @@ describe("useRoom", () => {
 		const { result } = renderHook(() => useRoom(roomId, userId));
 
 		await waitFor(() => {
-			expect(result.current.members.length).toBe(3);
+			expect(result.current.members?.length).toBe(3);
 		});
 
 		expect(result.current.members).toEqual(
@@ -129,7 +129,7 @@ describe("useRoom", () => {
 
 		// 初期状態を確認
 		await waitFor(() => {
-			expect(result.current.members.length).toBe(0);
+			expect(result.current.members?.length).toBe(0);
 		});
 
 		// 新しいメンバーを追加
@@ -141,14 +141,42 @@ describe("useRoom", () => {
 
 		// メンバーリストが更新されるのを待機
 		await waitFor(() => {
-			expect(result.current.members.length).toBe(1);
+			expect(result.current.members?.length).toBe(1);
 		});
 
-		expect(result.current.members[0]).toEqual(
+		expect(result.current.members?.[0]).toEqual(
 			expect.objectContaining({
 				name: "New User",
 				selectedCard: null,
 			}),
 		);
+	});
+
+	it("カードを選択できること", async () => {
+		// テスト用の部屋を作成
+		await createRoom(roomId);
+
+		// メンバーを追加
+		const memberData: MemberDoc = {
+			name: "Test User",
+			selectedCard: null,
+		};
+		const memberRef = doc(db, "rooms", roomId, "members", userId);
+		await setDoc(memberRef, memberData);
+
+		const { result } = renderHook(() => useRoom(roomId, userId));
+
+		// メンバー情報が取得されるまで待機
+		await waitFor(() => {
+			expect(result.current.currentMember).not.toBeNull();
+		});
+
+		// カードを選択
+		await result.current.selectCard(5);
+
+		// カード選択が反映されるまで待機
+		await waitFor(() => {
+			expect(result.current.currentMember?.selectedCard).toBe(5);
+		});
 	});
 });

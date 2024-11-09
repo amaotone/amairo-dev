@@ -9,12 +9,13 @@ import {
 	setDoc,
 	updateDoc,
 } from "firebase/firestore";
+import type { CardValue } from "../types";
 import { db } from "../utils/firebase-config";
 
 export interface Member {
 	id: string;
 	name: string;
-	selectedCard: string | null;
+	selectedCard: CardValue | null;
 }
 
 export interface Room {
@@ -50,14 +51,18 @@ export const roomConverter: FirestoreDataConverter<Room> = {
 export const memberConverter: FirestoreDataConverter<Member> = {
 	toFirestore: (member: Member) => {
 		const { id, ...data } = member;
-		return data;
+		return {
+			...data,
+			selectedCard: data.selectedCard?.toString() || null,
+		};
 	},
 	fromFirestore: (snapshot) => {
 		const data = snapshot.data();
 		return {
 			id: snapshot.id,
-			...data,
-		} as Member;
+			name: data.name,
+			selectedCard: data.selectedCard as CardValue,
+		};
 	},
 };
 

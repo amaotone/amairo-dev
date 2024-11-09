@@ -1,8 +1,9 @@
 import { useToast } from "@chakra-ui/react";
-import { collection, doc, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { useCallback, useEffect, useState } from "react";
 import type { Member, Room } from "../models/room";
 import { createRoom, memberConverter, roomConverter } from "../models/room";
+import type { CardValue } from "../types";
 import { db } from "../utils/firebase-config";
 
 interface RoomState {
@@ -11,6 +12,7 @@ interface RoomState {
 	members: Member[];
 	loading: boolean;
 	error: string | null;
+	selectCard: (value: string | null) => Promise<void>;
 }
 
 const initialState: RoomState = {
@@ -19,6 +21,7 @@ const initialState: RoomState = {
 	members: [],
 	loading: true,
 	error: null,
+	selectCard: async () => {},
 };
 
 export function useRoom(roomId: string, userId: string | null) {
@@ -85,13 +88,6 @@ export function useRoom(roomId: string, userId: string | null) {
 				if (doc.exists()) {
 					const member = doc.data();
 					setState((prev) => ({ ...prev, currentMember: member }));
-					toast({
-						title: `Welcome ${member.name}!`,
-						status: "success",
-						duration: 3000,
-						position: "top",
-						colorScheme: "brand",
-					});
 				}
 			},
 			(error) => {
@@ -133,5 +129,37 @@ export function useRoom(roomId: string, userId: string | null) {
 		return () => unsubscribe();
 	}, [roomId, toast]);
 
-	return state;
+	// カード選択関数を追加
+	const selectCard = useCallback(
+		async (value: CardValue) => {
+			if (!userId) return;
+			console.log("selectCard", value);
+
+			const memberRef = doc(
+				db,
+				"rooms",
+				roomId,
+				"members",
+				userId,
+			).withConverter(memberConverter);
+			try {
+				await updateDoc(memberRef, {
+					selectedCard: value,
+				});
+			} catch (error) {
+				console.error("Error updating card:", error);
+				toast({
+					title: "カードの選択に失敗しました",
+					status: "error",
+					duration: 3000,
+				});
+			}
+		},
+		[roomId, userId, toast],
+	);
+
+	return {
+		...state,
+		selectCard,
+	};
 }

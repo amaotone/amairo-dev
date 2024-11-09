@@ -24,16 +24,7 @@ service cloud.firestore {
         allow read: if true;
         
         // 作成・更新: 必要なフィールドのみ許可
-        allow write: if
-          // 必須フィールドの存在確認
-          request.resource.data.keys().hasOnly(['name', 'selectedCard']) &&
-          // nameは文字列で1文字以上
-          request.resource.data.name is string &&
-          request.resource.data.name.size() > 0 &&
-          // selectedCardは文字列またはnull
-          (request.resource.data.selectedCard == null ||
-           (request.resource.data.selectedCard is string &&
-            request.resource.data.selectedCard.size() > 0));
+        allow write: if true;
       }
     }
   }

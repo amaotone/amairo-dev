@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
 import { describe, expect, it } from "vitest";
+import { type Member, createRoom } from "../../models/room";
 import { db } from "../../utils/firebase-config";
-import { type MemberDoc, createRoom } from "../../utils/room";
 import { useRoom } from "../useRoom";
 
 const roomId = "test-room";
@@ -43,7 +43,8 @@ describe("useRoom", () => {
 	it("メンバー情報を正しく取得できること", async () => {
 		await createRoom(roomId);
 
-		const memberData: MemberDoc = {
+		const memberData: Member = {
+			id: userId,
 			name: "Test User",
 			selectedCard: null,
 		};
@@ -56,10 +57,7 @@ describe("useRoom", () => {
 			expect(result.current.currentMember).not.toBeNull();
 		});
 
-		expect(result.current.currentMember).toEqual({
-			id: userId,
-			...memberData,
-		});
+		expect(result.current.currentMember).toEqual(memberData);
 	});
 
 	it("userIdがnullの場合、メンバー情報を取得しないこと", async () => {
@@ -157,7 +155,8 @@ describe("useRoom", () => {
 		await createRoom(roomId);
 
 		// メンバーを追加
-		const memberData: MemberDoc = {
+		const memberData: Member = {
+			id: userId,
 			name: "Test User",
 			selectedCard: null,
 		};

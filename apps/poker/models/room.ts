@@ -112,3 +112,12 @@ export async function joinRoom(roomId: string, userId: string, name: string) {
 		selectedCard: null,
 	});
 }
+
+export const updateMember = async (
+	roomId: string,
+	userId: string,
+	member: Member,
+) => {
+	const memberRef = doc(db, "rooms", roomId, "members", userId);
+	await setDoc(memberRef, member);
+};

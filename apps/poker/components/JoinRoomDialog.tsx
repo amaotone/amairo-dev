@@ -11,7 +11,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { updateMember } from "../utils/room";
+import { updateMember } from "../models/room";
 
 interface Props {
 	isOpen: boolean;
@@ -32,6 +32,7 @@ export const JoinRoomDialog = ({ isOpen, roomId, userId, onJoin }: Props) => {
 		setIsLoading(true);
 		try {
 			await updateMember(roomId, userId, {
+				id: userId,
 				name: name.trim(),
 				selectedCard: null,
 			});

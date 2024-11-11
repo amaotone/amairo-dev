@@ -3,11 +3,14 @@ import {
 	type QueryDocumentSnapshot,
 	type SnapshotOptions,
 	type Timestamp,
+	collection,
 	doc,
 	getDoc,
+	getDocs,
 	serverTimestamp,
 	setDoc,
 	updateDoc,
+	writeBatch,
 } from "firebase/firestore";
 import type { CardValue } from "../types";
 import { db } from "../utils/firebase-config";
@@ -22,7 +25,7 @@ export interface Room {
 	id: string;
 	createdAt: Timestamp;
 	expireAt: Timestamp;
-	isVoting: boolean;
+	isOpen: boolean;
 	members?: Record<string, Member>;
 }
 
@@ -97,8 +100,26 @@ export const addMember = async (roomId: string, member: Member) => {
 export const openCards = async (roomId: string) => {
 	const roomRef = doc(db, "rooms", roomId);
 	await updateDoc(roomRef, {
-		lastOpenedAt: serverTimestamp(),
+		isOpen: true,
 	});
+};
+
+export const resetCards = async (roomId: string) => {
+	const roomRef = doc(db, "rooms", roomId);
+	await updateDoc(roomRef, {
+		isOpen: false,
+	});
+
+	// メンバーのカードをリセット
+	const membersRef = collection(db, "rooms", roomId, "members");
+	const membersSnapshot = await getDocs(membersRef);
+
+	const batch = writeBatch(db);
+	for (const doc of membersSnapshot.docs) {
+		batch.update(doc.ref, { selectedCard: null });
+	}
+
+	await batch.commit();
 };
 
 export async function joinRoom(roomId: string, userId: string, name: string) {

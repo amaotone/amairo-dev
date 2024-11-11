@@ -18,6 +18,11 @@ interface ResetDialogProps {
 export const ResetDialog = ({ isOpen, onClose, onReset }: ResetDialogProps) => {
 	const cancelRef = useRef<HTMLButtonElement>(null);
 
+	const handleReset = () => {
+		onReset();
+		onClose();
+	};
+
 	return (
 		<AlertDialog
 			isOpen={isOpen}
@@ -28,15 +33,15 @@ export const ResetDialog = ({ isOpen, onClose, onReset }: ResetDialogProps) => {
 			<AlertDialogOverlay>
 				<AlertDialogContent mx={4}>
 					<AlertDialogHeader fontSize="lg" fontWeight="bold">
-						Are you sure?
+						次のラウンドを開始しますか？
 					</AlertDialogHeader>
-					<AlertDialogBody>This will reset all cards.</AlertDialogBody>
+					<AlertDialogBody>全てのカードがリセットされます。</AlertDialogBody>
 					<AlertDialogFooter>
 						<Button ref={cancelRef} onClick={onClose}>
-							Cancel
+							キャンセル
 						</Button>
-						<Button colorScheme="brand" onClick={onReset} ml={3}>
-							Next
+						<Button colorScheme="brand" onClick={handleReset} ml={3}>
+							開始
 						</Button>
 					</AlertDialogFooter>
 				</AlertDialogContent>

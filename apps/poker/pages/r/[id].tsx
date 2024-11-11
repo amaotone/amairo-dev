@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import type { GetServerSideProps } from "next";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { ActionButtons } from "../../components/ActionButtons";
 import { CardGrid } from "../../components/CardGrid";
 import { CardSelector } from "../../components/CardSelector";
@@ -17,7 +17,6 @@ import { Header } from "../../components/Header";
 import { JoinRoomDialog } from "../../components/JoinRoomDialog";
 import { ResetDialog } from "../../components/ResetDialog";
 import { Stats } from "../../components/Stats";
-import { useCards } from "../../hooks/useCards";
 import { useRoom } from "../../hooks/useRoom";
 import { userIdAtom } from "../../stores/user";
 import type { CardValue } from "../../types";
@@ -44,29 +43,44 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	const [userId, setUserId] = useAtom(userIdAtom);
-	const { cards, addCard, openAllCards, resetCards } = useCards();
-	const { isOpen, onOpen: openDialog, onClose: closeDialog } = useDisclosure();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const {
+		room,
+		members,
+		currentMember,
+		openCards,
+		resetCards,
+		selectCard,
+		loading,
+	} = useRoom(roomId, userId);
 
+	// ユーザーIDがない場合は生成
 	useEffect(() => {
 		if (!userId) {
 			setUserId(generateId());
 		}
 	}, [userId, setUserId]);
 
-	const { room, members, currentMember, loading, error, selectCard } = useRoom(
-		roomId,
-		userId,
+	const handleCardSelect = useCallback(
+		async (value: CardValue) => {
+			if (!currentMember) return;
+			await selectCard(value);
+		},
+		[currentMember, selectCard],
 	);
 
-	const handleReset = async () => {
-		resetCards();
-		closeDialog();
-	};
+	const handleOpenAll = useCallback(() => {
+		openCards();
+	}, [openCards]);
 
-	const handleCardSelect = async (value: CardValue) => {
-		if (!currentMember) return;
-		await selectCard(value);
-	};
+	const handleNext = useCallback(() => {
+		onOpen();
+	}, [onOpen]);
+
+	const handleReset = useCallback(async () => {
+		await resetCards();
+		onClose();
+	}, [resetCards, onClose]);
 
 	if (loading) {
 		return (
@@ -112,13 +126,24 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 				>
 					<VStack gap={8} align="stretch">
 						<Box>
-							<ActionButtons onOpenAll={openAllCards} onNext={openDialog} />
-
-							<Stats cards={cards} />
+							<ActionButtons
+								onOpenAll={handleOpenAll}
+								onNext={handleNext}
+								room={room}
+							/>
+							<Stats
+								cards={members.map((m) => ({
+									id: m.id,
+									value: m.selectedCard ?? "?",
+									isOpen: room?.isOpen ?? false,
+									name: m.name,
+									isSorted: false,
+								}))}
+							/>
 						</Box>
 
 						<Box>
-							<CardGrid members={members ?? []} isOpen={isOpen} cards={cards} />
+							<CardGrid members={members} room={room} />
 						</Box>
 					</VStack>
 				</Box>
@@ -126,15 +151,11 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 				<CardSelector onSelect={handleCardSelect} />
 			</Container>
 
-			<ResetDialog
-				isOpen={isOpen}
-				onClose={closeDialog}
-				onReset={handleReset}
-			/>
+			<ResetDialog isOpen={isOpen} onClose={onClose} onReset={handleReset} />
 
 			<JoinRoomDialog
 				isOpen={!currentMember && !loading}
-				roomId={roomId as string}
+				roomId={roomId}
 				userId={userId as string}
 				onJoin={() => {}}
 			/>

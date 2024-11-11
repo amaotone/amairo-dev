@@ -3,8 +3,8 @@ import { useToast } from "@chakra-ui/react";
 import { Cards01Icon } from "hugeicons-react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { createRoom } from "../models/room";
 import { generateId } from "../utils/id";
-import { createRoom } from "../utils/room";
 
 const HomePage = () => {
 	const router = useRouter();

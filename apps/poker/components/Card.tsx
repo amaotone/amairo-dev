@@ -17,6 +17,7 @@ interface CardProps {
 	name: string;
 	isSorted: boolean;
 	width?: { base: string; md: string };
+	className?: string;
 }
 
 const getCardStyle = (value: CardValue): CardStyle => {
@@ -115,6 +116,7 @@ export const Card: FC<CardProps> = ({
 	name,
 	isSorted,
 	width = { base: "60px", md: "80px" },
+	className = "",
 }) => {
 	const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 	const [prevIsSorted, setPrevIsSorted] = useState(isSorted);
@@ -145,7 +147,7 @@ export const Card: FC<CardProps> = ({
 					width={width}
 					height={{ base: "84px", md: "112px" }}
 					style={{ transformStyle: "preserve-3d" }}
-					transition="transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+					className={className}
 					transform={
 						isAnimationComplete
 							? isOpen

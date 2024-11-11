@@ -3,6 +3,10 @@ import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import type { Member, Room } from "../models/room";
 import { createRoom, memberConverter, roomConverter } from "../models/room";
+import {
+	openCards as openCardsModel,
+	resetCards as resetCardsModel,
+} from "../models/room";
 import type { CardValue } from "../types";
 import { db } from "../utils/firebase-config";
 
@@ -158,8 +162,36 @@ export function useRoom(roomId: string, userId: string | null) {
 		[roomId, userId, toast],
 	);
 
+	const openCards = useCallback(async () => {
+		try {
+			await openCardsModel(roomId);
+		} catch (error) {
+			console.error("Error opening cards:", error);
+			toast({
+				title: "Failed to open cards",
+				status: "error",
+				duration: 3000,
+			});
+		}
+	}, [roomId, toast]);
+
+	const resetCards = useCallback(async () => {
+		try {
+			await resetCardsModel(roomId);
+		} catch (error) {
+			console.error("Error resetting cards:", error);
+			toast({
+				title: "Failed to reset cards",
+				status: "error",
+				duration: 3000,
+			});
+		}
+	}, [roomId, toast]);
+
 	return {
 		...state,
 		selectCard,
+		openCards,
+		resetCards,
 	};
 }

@@ -16,7 +16,7 @@ service cloud.firestore {
       
       allow update: if
         request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['expireAt', 'isVoting']);
+          .hasOnly(['expireAt', 'isOpen']);
 
       // メンバーのサブコレクションに対するルール
       match /members/{memberId} {

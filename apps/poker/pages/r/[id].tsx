@@ -43,7 +43,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function RoomPageComponent({ roomId }: { roomId: string }) {
 	const [userId, setUserId] = useAtom(userIdAtom);
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const {
+		isOpen: isResetDialogOpen,
+		onOpen: openResetDialog,
+		onClose: closeResetDialog,
+	} = useDisclosure();
 	const {
 		room,
 		members,
@@ -69,14 +73,10 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		[currentMember, selectCard],
 	);
 
-	const handleNext = useCallback(() => {
-		onOpen();
-	}, [onOpen]);
-
 	const handleReset = useCallback(async () => {
 		await resetCards();
-		onClose();
-	}, [resetCards, onClose]);
+		closeResetDialog();
+	}, [resetCards, closeResetDialog]);
 
 	if (loading) {
 		return (
@@ -122,11 +122,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 				>
 					<VStack gap={8} align="stretch">
 						<Box>
-							<ActionButtons
-								onOpenAll={openCards}
-								onNext={handleNext}
-								room={room}
-							/>
+							<ActionButtons onOpenAll={openCards} onNext={openResetDialog} />
 							<Stats
 								cards={members.map((m) => ({
 									id: m.id,
@@ -147,7 +143,11 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 				<CardSelector onSelect={handleCardSelect} />
 			</Container>
 
-			<ResetDialog isOpen={isOpen} onClose={onClose} onReset={handleReset} />
+			<ResetDialog
+				isOpen={isResetDialogOpen}
+				onClose={closeResetDialog}
+				onReset={handleReset}
+			/>
 
 			<JoinRoomDialog
 				isOpen={!currentMember && !loading}

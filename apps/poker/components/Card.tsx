@@ -109,6 +109,19 @@ const animateSortedAppearance = (id: string) => {
 	});
 };
 
+const animateCardAppearance = (id: string) => {
+	const element = document.getElementById(`card-container-${id}`);
+	if (!element) return;
+
+	anime({
+		targets: element,
+		scale: [0.9, 1],
+		opacity: [0.5, 1],
+		duration: 300,
+		easing: "easeOutElastic(1, .6)",
+	});
+};
+
 export const Card: FC<CardProps> = ({
 	id,
 	value,
@@ -119,12 +132,21 @@ export const Card: FC<CardProps> = ({
 	className = "",
 }) => {
 	const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+	const [prevValue, setPrevValue] = useState<CardValue | null>(value);
 	const [prevIsSorted, setPrevIsSorted] = useState(isSorted);
 	const cardStyle = getCardStyle(value);
 
 	useEffect(() => {
 		animateInitialAppearance(id, () => setIsAnimationComplete(true));
 	}, [id]);
+
+	useEffect(() => {
+		if (value === prevValue) return;
+		setPrevValue(value);
+
+		if (!isAnimationComplete) return;
+		animateCardAppearance(id);
+	}, [value, prevValue, id, isAnimationComplete]);
 
 	useEffect(() => {
 		if (isSorted === prevIsSorted) return;

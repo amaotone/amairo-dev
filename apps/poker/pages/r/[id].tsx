@@ -69,10 +69,6 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 		[currentMember, selectCard],
 	);
 
-	const handleOpenAll = useCallback(() => {
-		openCards();
-	}, [openCards]);
-
 	const handleNext = useCallback(() => {
 		onOpen();
 	}, [onOpen]);
@@ -127,7 +123,7 @@ export default function RoomPageComponent({ roomId }: { roomId: string }) {
 					<VStack gap={8} align="stretch">
 						<Box>
 							<ActionButtons
-								onOpenAll={handleOpenAll}
+								onOpenAll={openCards}
 								onNext={handleNext}
 								room={room}
 							/>

@@ -247,8 +247,8 @@ importers:
   packages/tsconfig:
     dependencies:
       '@tsconfig/next':
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: 2.0.3
+        version: 2.0.3
 
 packages:
 
@@ -1765,8 +1765,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@tsconfig/next@1.0.5':
-    resolution: {integrity: sha512-ZpAlWqSGE3ZWFqKmI3FiQEu8WcBF3uii1z1ovedMcALflsRoJnExp3YzWQ/fU7lzGmYtfX1CWFpf1Gl8aEC6GQ==}
+  '@tsconfig/next@2.0.3':
+    resolution: {integrity: sha512-b4aKvmdWnv9aUy+NStUFlefirk3SItW20OJtbi5/ue9oMRaQtUYbN5zsr7OmV3rlx6Gp6h7A82gPoCXhrNGVPQ==}
 
   '@types/animejs@3.1.12':
     resolution: {integrity: sha512-fpdH+ZtlO0kqjTOqRaBdsEmvpRNOayI8k4EVkEtitL5l6wducDOXk0rgQgfZqWf/ZX9DzXrHf257S5i9xTcISQ==}
@@ -5731,7 +5731,7 @@ snapshots:
       '@types/react': 18.3.12
       '@types/react-dom': 18.3.1
 
-  '@tsconfig/next@1.0.5': {}
+  '@tsconfig/next@2.0.3': {}
 
   '@types/animejs@3.1.12': {}
 

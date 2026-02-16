@@ -6,8 +6,8 @@ import "../styles/globals.css";
 
 const theme = extendTheme({
   fonts: {
-    heading: "'M PLUS Rounded 1c', sans-serif",
-    body: "'M PLUS Rounded 1c', sans-serif",
+    heading: "'LINE Seed JP', sans-serif",
+    body: "'LINE Seed JP', sans-serif",
   },
   components: {
     Component: {

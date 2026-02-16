@@ -71,7 +71,7 @@ const Home: NextPage = () => {
 							title="fusen"
 							text="リンクを送るだけでみんなで使えるTODOアプリ。家族や仲間内でサッとタスクを共有できます。"
 							link="https://thefusen.com"
-							code="https://github.com/amaotone/fusen"
+							image="https://thefusen.com/ogp.png"
 							tags={["React", "Vite", "Supabase"]}
 						/>
 						<ProductCard
@@ -79,7 +79,6 @@ const Home: NextPage = () => {
 							text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れました。"
 							link="https://ichibunichie.com"
 							blog="https://amalog.hateblo.jp/entry/ichibunichie-dev"
-							code="https://github.com/amaotone/ichibunichie"
 							image="https://ichibunichie.com/og.jpg"
 							tags={["Next.js", "Tailwind", "Firebase"]}
 						/>

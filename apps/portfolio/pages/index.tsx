@@ -52,19 +52,14 @@ const Home: NextPage = () => {
 					</Heading>
 					<Text fontWeight={700}>鈴木天音 / Amane Suzuki</Text>
 					<Text>
-						東京大学、東京大学大学院にてケモインフォマティクス（化学と機械学習の融合領域）を専攻しました。
+						機械学習・データエンジニアリングをバックグラウンドに持つソフトウェアエンジニアです。
 					</Text>
 					<Text>
-						2019年、株式会社ディー・エヌ・エーに入社し機械学習や最適化のプロジェクトに携わりました。
+						東京大学大学院でケモインフォマティクスを専攻した後、ディー・エヌ・エーで機械学習エンジニアとしてレコメンドや最適化に取り組みました。キャディでは機械学習基盤の構築やデータチームの立ち上げを経て、現在はAI
+						agent関連の開発を行っています。Kaggle Master。
 					</Text>
 					<Text>
-						2022年、キャディ株式会社に入社し、AI
-						Labで機械学習プロジェクトの立ち上げやGoogle
-						Cloudを活用した機械学習基盤の開発などに携っています。
-					</Text>
-					<Text>Kaggle Master。AtCoder水色。</Text>
-					<Text>
-						趣味は個人開発で、React、Next.jsをはじめとしたフロントエンド技術によく触れています。
+						個人開発では、使っていて心地よいと感じるプロダクトを目指しています。最近はAIを活用した開発プロセスに関心があり、小さなチームや個人でプロダクトを形にすることに取り組んでいます。
 					</Text>
 				</Box>
 				<Box>
@@ -73,11 +68,17 @@ const Home: NextPage = () => {
 					</Heading>
 					<SimpleGrid columns={[1, 3]} spacing={3}>
 						<ProductCard
+							title="fusen"
+							text="リンクを送るだけでみんなで使えるTODOアプリ。家族や仲間内でサッとタスクを共有できます。"
+							link="https://thefusen.com"
+							image="https://thefusen.com/ogp.png"
+							tags={["React", "Vite", "Supabase"]}
+						/>
+						<ProductCard
 							title="一文一会"
 							text="ランダムに出てくるフレーズをもとに本と出会うサービス。アニメーションに力を入れました。"
 							link="https://ichibunichie.com"
 							blog="https://amalog.hateblo.jp/entry/ichibunichie-dev"
-							code="https://github.com/amaotone/ichibunichie"
 							image="https://ichibunichie.com/og.jpg"
 							tags={["Next.js", "Tailwind", "Firebase"]}
 						/>

@@ -21,13 +21,13 @@
     "typescript": "5.6.3"
   },
   "engines": {
-    "pnpm": ">=9.1.0",
+    "pnpm": ">=10.29.3",
     "node": ">=v20.11.0"
   },
   "resolutions": {
     "@types/react": "18.3.12"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@10.29.3",
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix"

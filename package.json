@@ -15,19 +15,19 @@
     "prepare": "lefthook install"
   },
   "devDependencies": {
-    "@types/react": "18.3.12",
-    "prettier": "^3.3.3",
-    "turbo": "^2.2.3",
-    "typescript": "5.6.3"
+    "@types/react": "18.3.28",
+    "prettier": "^3.8.1",
+    "turbo": "^2.8.9",
+    "typescript": "5.9.3"
   },
   "engines": {
-    "pnpm": ">=9.1.0",
-    "node": ">=v20.11.0"
+    "pnpm": ">=9.15.9",
+    "node": ">=20.20.0"
   },
   "resolutions": {
-    "@types/react": "18.3.12"
+    "@types/react": "18.3.28"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@9.15.9",
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix"
@@ -40,6 +40,6 @@
     ]
   },
   "dependencies": {
-    "lefthook": "^1.8.2"
+    "lefthook": "^1.13.6"
   }
 }

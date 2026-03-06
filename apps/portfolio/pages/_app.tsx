@@ -6,8 +6,8 @@ import "../styles/globals.css";
 
 const theme = extendTheme({
   fonts: {
-    heading: "'M PLUS Rounded 1c', sans-serif",
-    body: "'M PLUS Rounded 1c', sans-serif",
+    heading: "'LINE Seed JP', sans-serif",
+    body: "'LINE Seed JP', sans-serif",
   },
   components: {
     Component: {
@@ -17,15 +17,38 @@ const theme = extendTheme({
       baseStyle: {
         zIndex: 1,
         color: "gray.700",
-        letterSpacing: 1.2,
+        fontWeight: 700,
+        letterSpacing: "-0.02em",
+        lineHeight: 1.15,
+        textWrap: "balance",
       },
     },
     Text: {
       baseStyle: {
         zIndex: 1,
         color: "gray.700",
-        letterSpacing: 1.05,
-        lineHeight: 1.5,
+        fontWeight: 400,
+        letterSpacing: "normal",
+        lineHeight: 1.75,
+      },
+    },
+    Tag: {
+      baseStyle: {
+        fontWeight: 700,
+        letterSpacing: "normal",
+      },
+    },
+    Th: {
+      baseStyle: {
+        fontWeight: 700,
+        fontSize: "sm",
+        letterSpacing: "normal",
+        textTransform: "none",
+      },
+    },
+    Td: {
+      baseStyle: {
+        fontSize: "sm",
       },
     },
   },

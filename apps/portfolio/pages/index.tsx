@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useCallback } from "react";
 import { BlogArticles } from "../components/BlogArticles";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
@@ -50,7 +49,9 @@ const Home: NextPage = () => {
 					<Heading as="h2" mt={12} mb={6}>
 						About me
 					</Heading>
-					<Text fontWeight={700}>鈴木天音 / Amane Suzuki</Text>
+					<Text fontSize="lg" fontWeight={800} mb={1}>
+						鈴木天音 / Amane Suzuki
+					</Text>
 					<Text>
 						機械学習・データエンジニアリングをバックグラウンドに持つソフトウェアエンジニアです。
 					</Text>

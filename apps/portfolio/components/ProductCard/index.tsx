@@ -38,12 +38,12 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
         />
       </Box>
       <Stack p={6} pb={3} justify={"center"}>
-        <Heading color={"gray.700"} size={"md"}>
+        <Heading color={"gray.700"} size={"md"} fontWeight={700}>
           <LinkOverlay href={link} isExternal>
             {title}
           </LinkOverlay>
         </Heading>
-        <Text color={"gray.500"} fontSize={"sm"}>
+        <Text color={"gray.600"} fontSize={"sm"} lineHeight={1.7}>
           {text}
         </Text>
         {tags && (

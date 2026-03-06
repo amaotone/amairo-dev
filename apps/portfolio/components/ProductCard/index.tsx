@@ -12,6 +12,7 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
+import { FaApple } from "react-icons/fa";
 import { RiArticleLine, RiCodeLine, RiExternalLinkLine } from "react-icons/ri";
 
 interface Props {
@@ -26,6 +27,8 @@ interface Props {
 
 export const ProductCard: React.FC<Props> = (props: Props) => {
   const { title, text, link, blog, code, image, tags } = props;
+  const isAppStoreLink = link.includes("apps.apple.com");
+
   return (
     <LinkBox boxShadow={"base"} bg="white">
       <Box boxShadow="sm">
@@ -65,7 +68,13 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
                     variant="ghost"
                     isRound
                     p={1}
-                    icon={<Icon as={RiExternalLinkLine} w={4} h={4} />}
+                    icon={
+                      <Icon
+                        as={isAppStoreLink ? FaApple : RiExternalLinkLine}
+                        w={4}
+                        h={4}
+                      />
+                    }
                   />
                 </Link>
               )}

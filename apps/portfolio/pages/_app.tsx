@@ -65,11 +65,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 			</Head>
 			<DefaultSeo
 				defaultTitle="amairo.dev"
-				description="Amane Suzuki's personal website"
+				description="機械学習からAI agent、個人開発までを横断するソフトウェアエンジニア Amane Suzuki のポートフォリオ。"
 				openGraph={{
 					type: "website",
 					title: "amairo.dev",
-					description: "Amane Suzuki's personal website",
+					description:
+						"機械学習からAI agent、個人開発までを横断するソフトウェアエンジニア Amane Suzuki のポートフォリオ。",
 					site_name: "amairo.dev",
 					url: "amairo.dev",
 					images: [

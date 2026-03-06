@@ -27,7 +27,10 @@ const Home: NextPage = () => {
 		<>
 			<Head>
 				<title>amairo.dev</title>
-				<meta name="description" content="Amane Suzuki's personal website" />
+				<meta
+					name="description"
+					content="機械学習からAI agent、個人開発までを横断するソフトウェアエンジニア Amane Suzuki のポートフォリオ。"
+				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Container maxW="4xl" my={12} sx={blurAppearance}>
@@ -53,14 +56,14 @@ const Home: NextPage = () => {
 						鈴木天音 / Amane Suzuki
 					</Text>
 					<Text>
-						機械学習・データエンジニアリングをバックグラウンドに持つソフトウェアエンジニアです。
+						機械学習からプロダクト開発までを横断するソフトウェアエンジニアです。データ・MLの深い専門性を土台に、ユーザーに届く体験を素早く形にするのが得意です。
 					</Text>
 					<Text>
-						東京大学大学院でケモインフォマティクスを専攻した後、ディー・エヌ・エーで機械学習エンジニアとしてレコメンドや最適化に取り組みました。キャディでは機械学習基盤の構築やデータチームの立ち上げを経て、現在はAI
+						東京大学大学院でケモインフォマティクスを専攻した後、ディー・エヌ・エーで機械学習エンジニアとしてレコメンドや最適化に取り組みました。キャディでは機械学習基盤の構築やデータチームの立ち上げを担い、現在はAI
 						agent関連の開発を行っています。Kaggle Master。
 					</Text>
 					<Text>
-						個人開発では、使っていて心地よいと感じるプロダクトを目指しています。最近はAIを活用した開発プロセスに関心があり、小さなチームや個人でプロダクトを形にすることに取り組んでいます。
+						個人開発では、使っていて気持ちいいUIと、毎日自然に開きたくなる体験を大切にしています。AIを活用して小さく速くつくり、手触りのよいプロダクトを育てるのが好きです。
 					</Text>
 				</Box>
 				<Box>

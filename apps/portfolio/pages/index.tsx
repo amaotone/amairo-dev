@@ -4,13 +4,9 @@ import {
 	Container,
 	Heading,
 	SimpleGrid,
-	Table,
-	Tbody,
-	Td,
+	Stack,
+	Tag,
 	Text,
-	Th,
-	Thead,
-	Tr,
 	VStack,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
@@ -18,7 +14,6 @@ import Head from "next/head";
 import { BlogArticles } from "../components/BlogArticles";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
-import { SkillRaders } from "../components/SkillRadars";
 import { SocialIcons } from "../components/SocialIcons";
 import { blurAppearance } from "../components/blurAppearance";
 
@@ -116,30 +111,79 @@ const Home: NextPage = () => {
 					<Heading as="h2" mt={12} mb={6}>
 						Favorite
 					</Heading>
-					<Table variant="simple">
-						<Thead>
-							<Tr>
-								<Th>Category</Th>
-								<Th>Contents</Th>
-							</Tr>
-						</Thead>
-						<Tbody>
-							<Tr>
-								<Td>Programming Language</Td>
-								<Td>Python, TypeScript</Td>
-							</Tr>
-							<Tr>
-								<Td>ML Library</Td>
-								<Td>PyTorch, LightGBM</Td>
-							</Tr>
-						</Tbody>
-					</Table>
-				</Box>
-				<Box>
-					<Heading as="h2" mt={12} mb={6}>
-						Skill
-					</Heading>
-					<SkillRaders />
+					<SimpleGrid columns={[1, 2]} spacing={4}>
+						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+							<Text color="teal.500" fontSize="sm" fontWeight={700} mb={2}>
+								Code
+							</Text>
+							<Heading as="h3" size="md" mb={3}>
+								毎日書いていて楽しい技術
+							</Heading>
+							<Text mb={4}>
+								Python と TypeScript
+								が中心です。データやMLの実験から、プロダクトとして仕上げる実装まで、この2つで行き来するのが好きです。
+							</Text>
+							<Stack direction="row" flexWrap="wrap" gap={2}>
+								<Tag>Python</Tag>
+								<Tag>TypeScript</Tag>
+								<Tag>React</Tag>
+								<Tag>React Native</Tag>
+							</Stack>
+						</Box>
+						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+							<Text color="orange.400" fontSize="sm" fontWeight={700} mb={2}>
+								Machine Learning
+							</Text>
+							<Heading as="h3" size="md" mb={3}>
+								深く向き合ってきた領域
+							</Heading>
+							<Text mb={4}>
+								推薦、最適化、MLOps
+								まわりに長く取り組んできました。モデルそのものだけでなく、継続的に価値を出せる運用まで含めて考えるのが好きです。
+							</Text>
+							<Stack direction="row" flexWrap="wrap" gap={2}>
+								<Tag>PyTorch</Tag>
+								<Tag>LightGBM</Tag>
+								<Tag>Recommendation</Tag>
+								<Tag>MLOps</Tag>
+							</Stack>
+						</Box>
+						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+							<Text color="pink.400" fontSize="sm" fontWeight={700} mb={2}>
+								Product
+							</Text>
+							<Heading as="h3" size="md" mb={3}>
+								手触りのよいプロダクト
+							</Heading>
+							<Text mb={4}>
+								使っていて気持ちいいUIや、毎日つい開きたくなる体験に惹かれます。小さくつくって試し、磨きながら育てていく過程が好きです。
+							</Text>
+							<Stack direction="row" flexWrap="wrap" gap={2}>
+								<Tag>UI</Tag>
+								<Tag>UX</Tag>
+								<Tag>Animation</Tag>
+								<Tag>Indie Hacking</Tag>
+							</Stack>
+						</Box>
+						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+							<Text color="blue.400" fontSize="sm" fontWeight={700} mb={2}>
+								Outside Work
+							</Text>
+							<Heading as="h3" size="md" mb={3}>
+								発信と学び
+							</Heading>
+							<Text mb={4}>
+								ブログや note
+								で開発の振り返りを書くのが好きです。技術を整理して言語化すると、自分のつくりたいものもはっきりしてきます。
+							</Text>
+							<Stack direction="row" flexWrap="wrap" gap={2}>
+								<Tag>Blog</Tag>
+								<Tag>note</Tag>
+								<Tag>Kaggle</Tag>
+								<Tag>Writing</Tag>
+							</Stack>
+						</Box>
+					</SimpleGrid>
 				</Box>
 				<Box>
 					<Heading as="h2" mt={12} mb={6}>

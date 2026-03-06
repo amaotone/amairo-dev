@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { BlogArticles } from "../components/BlogArticles";
 import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
 import { SocialIcons } from "../components/SocialIcons";
@@ -184,12 +183,6 @@ const Home: NextPage = () => {
 							</Stack>
 						</Box>
 					</SimpleGrid>
-				</Box>
-				<Box>
-					<Heading as="h2" mt={12} mb={6}>
-						Blog
-					</Heading>
-					<BlogArticles />
 				</Box>
 			</Container>
 		</>

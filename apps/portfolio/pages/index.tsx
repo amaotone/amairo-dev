@@ -74,7 +74,7 @@ const Home: NextPage = () => {
 							link="https://apps.apple.com/jp/app/%E8%AA%AD%E6%9B%B8%E7%AE%A1%E7%90%86%E3%83%84%E3%82%AE%E3%83%A8%E3%83%A0-%E3%83%9E%E3%83%B3%E3%82%AC%E8%AA%AD%E6%9B%B8%E8%A8%98%E9%8C%B2/id6759438934"
 							blog="https://note.com/amaotone/n/n6f3d347cc674"
 							image="/tsugiyomu-og.png"
-							tags={["iOS"]}
+							tags={["iOS", "React Native"]}
 						/>
 						<ProductCard
 							title="fusen"

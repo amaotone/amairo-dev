@@ -4,7 +4,6 @@
 
 - `portfolio`: ポートフォリオサイト
 - `letter`: Web上で手紙を書いて画像として保存できるアプリ
-- `poker`: プランニングポーカーアプリ
 
 ## tech stack
 
@@ -15,5 +14,5 @@
 ## development
 
 ```bash
-pnpm turbo dev
+bun run dev
 ```

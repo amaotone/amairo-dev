@@ -15,6 +15,10 @@ import { ProductCard } from "../components/ProductCard";
 import { PulseAvatar } from "../components/PulseAvatar";
 import { SocialIcons } from "../components/SocialIcons";
 import { blurAppearance } from "../components/blurAppearance";
+import {
+	portfolioCardStyle,
+	portfolioTagRowStyle,
+} from "../components/cardStyles";
 
 const Home: NextPage = () => {
 	return (
@@ -111,7 +115,7 @@ const Home: NextPage = () => {
 						Favorite
 					</Heading>
 					<SimpleGrid columns={[1, 2]} spacing={4}>
-						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+						<Box {...portfolioCardStyle} p={6}>
 							<Text color="teal.500" fontSize="sm" fontWeight={700} mb={2}>
 								Code
 							</Text>
@@ -122,14 +126,14 @@ const Home: NextPage = () => {
 								Python と TypeScript
 								が中心です。データやMLの実験から、プロダクトとして仕上げる実装まで、この2つで行き来するのが好きです。
 							</Text>
-							<Stack direction="row" flexWrap="wrap" gap={2}>
+							<Stack {...portfolioTagRowStyle}>
 								<Tag>Python</Tag>
 								<Tag>TypeScript</Tag>
 								<Tag>React</Tag>
 								<Tag>React Native</Tag>
 							</Stack>
 						</Box>
-						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+						<Box {...portfolioCardStyle} p={6}>
 							<Text color="orange.400" fontSize="sm" fontWeight={700} mb={2}>
 								Machine Learning
 							</Text>
@@ -140,14 +144,14 @@ const Home: NextPage = () => {
 								推薦、最適化、MLOps
 								まわりに長く取り組んできました。モデルそのものだけでなく、継続的に価値を出せる運用まで含めて考えるのが好きです。
 							</Text>
-							<Stack direction="row" flexWrap="wrap" gap={2}>
+							<Stack {...portfolioTagRowStyle}>
 								<Tag>PyTorch</Tag>
 								<Tag>LightGBM</Tag>
 								<Tag>Recommendation</Tag>
 								<Tag>MLOps</Tag>
 							</Stack>
 						</Box>
-						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+						<Box {...portfolioCardStyle} p={6}>
 							<Text color="pink.400" fontSize="sm" fontWeight={700} mb={2}>
 								Product
 							</Text>
@@ -157,14 +161,14 @@ const Home: NextPage = () => {
 							<Text mb={4}>
 								使っていて気持ちいいUIや、毎日つい開きたくなる体験に惹かれます。小さくつくって試し、磨きながら育てていく過程が好きです。
 							</Text>
-							<Stack direction="row" flexWrap="wrap" gap={2}>
+							<Stack {...portfolioTagRowStyle}>
 								<Tag>UI</Tag>
 								<Tag>UX</Tag>
 								<Tag>Animation</Tag>
 								<Tag>Indie Hacking</Tag>
 							</Stack>
 						</Box>
-						<Box bg="white" boxShadow="base" borderRadius="xl" p={6}>
+						<Box {...portfolioCardStyle} p={6}>
 							<Text color="blue.400" fontSize="sm" fontWeight={700} mb={2}>
 								Outside Work
 							</Text>
@@ -175,7 +179,7 @@ const Home: NextPage = () => {
 								ブログや note
 								で開発の振り返りを書くのが好きです。技術を整理して言語化すると、自分のつくりたいものもはっきりしてきます。
 							</Text>
-							<Stack direction="row" flexWrap="wrap" gap={2}>
+							<Stack {...portfolioTagRowStyle}>
 								<Tag>Blog</Tag>
 								<Tag>note</Tag>
 								<Tag>Kaggle</Tag>

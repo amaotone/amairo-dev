@@ -1,6 +1,5 @@
 import {
 	Box,
-	Center,
 	Heading,
 	Icon,
 	IconButton,
@@ -14,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { FaApple } from "react-icons/fa";
 import { RiArticleLine, RiCodeLine, RiExternalLinkLine } from "react-icons/ri";
+import { portfolioCardStyle, portfolioTagRowStyle } from "../cardStyles";
 
 interface Props {
 	title: string;
@@ -30,24 +30,29 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
 	const isAppStoreLink = link.includes("apps.apple.com");
 
 	return (
-		<LinkBox boxShadow={"base"} bg="white">
-			<Box boxShadow="sm">
+		<LinkBox {...portfolioCardStyle} h="full">
+			<Box borderBottomWidth="1px" borderColor="blackAlpha.100">
 				<Image
 					src={image || "https://via.placeholder.com/800x450.png"}
-					alt="placeholder"
+					alt={`${title} preview`}
+					w="full"
+					h="184px"
+					objectFit="cover"
 				/>
 			</Box>
-			<Stack p={6} pb={3} justify={"center"}>
-				<Heading color={"gray.700"} size={"md"} fontWeight={700}>
-					<LinkOverlay href={link} isExternal>
-						{title}
-					</LinkOverlay>
-				</Heading>
-				<Text color={"gray.600"} fontSize={"sm"} lineHeight={1.7}>
-					{text}
-				</Text>
+			<Stack p={6} spacing={4} justify="space-between" minH="260px">
+				<Box>
+					<Heading color="gray.700" size="md" fontWeight={700} mb={3}>
+						<LinkOverlay href={link} isExternal>
+							{title}
+						</LinkOverlay>
+					</Heading>
+					<Text color="gray.600" fontSize="sm" lineHeight={1.8}>
+						{text}
+					</Text>
+				</Box>
 				{tags && (
-					<Stack direction={"row"}>
+					<Stack {...portfolioTagRowStyle}>
 						{tags.map((tag) => {
 							return (
 								<Tag size="sm" colorScheme="teal" key={tag}>
@@ -57,54 +62,50 @@ export const ProductCard: React.FC<Props> = (props: Props) => {
 						})}
 					</Stack>
 				)}
-				<Box>
-					<Center>
-						<Stack direction={"row"}>
-							{link && (
-								<Link href={link} isExternal>
-									<IconButton
-										aria-label={title}
-										colorScheme="teal"
-										variant="ghost"
-										isRound
-										p={1}
-										icon={
-											<Icon
-												as={isAppStoreLink ? FaApple : RiExternalLinkLine}
-												w={4}
-												h={4}
-											/>
-										}
+				<Stack direction="row" justify="flex-end" spacing={1}>
+					{link && (
+						<Link href={link} isExternal>
+							<IconButton
+								aria-label={title}
+								colorScheme="teal"
+								variant="ghost"
+								isRound
+								p={1}
+								icon={
+									<Icon
+										as={isAppStoreLink ? FaApple : RiExternalLinkLine}
+										w={4}
+										h={4}
 									/>
-								</Link>
-							)}
-							{blog && (
-								<Link href={blog} isExternal>
-									<IconButton
-										aria-label="blog"
-										colorScheme="teal"
-										variant="ghost"
-										isRound
-										p={1}
-										icon={<Icon as={RiArticleLine} w={4} h={4} />}
-									/>
-								</Link>
-							)}
-							{code && (
-								<Link href={code} isExternal>
-									<IconButton
-										aria-label="code"
-										colorScheme="teal"
-										variant="ghost"
-										isRound
-										p={1}
-										icon={<Icon as={RiCodeLine} w={4} h={4} />}
-									/>
-								</Link>
-							)}
-						</Stack>
-					</Center>
-				</Box>
+								}
+							/>
+						</Link>
+					)}
+					{blog && (
+						<Link href={blog} isExternal>
+							<IconButton
+								aria-label="blog"
+								colorScheme="teal"
+								variant="ghost"
+								isRound
+								p={1}
+								icon={<Icon as={RiArticleLine} w={4} h={4} />}
+							/>
+						</Link>
+					)}
+					{code && (
+						<Link href={code} isExternal>
+							<IconButton
+								aria-label="code"
+								colorScheme="teal"
+								variant="ghost"
+								isRound
+								p={1}
+								icon={<Icon as={RiCodeLine} w={4} h={4} />}
+							/>
+						</Link>
+					)}
+				</Stack>
 			</Stack>
 		</LinkBox>
 	);

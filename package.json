@@ -12,7 +12,7 @@
 		"prepare": "lefthook install"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.4.6",
 		"@types/react": "18.3.12",
 		"eslint": "9.14.0",
 		"eslint-config-next": "15.0.2",

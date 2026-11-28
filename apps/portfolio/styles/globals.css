@@ -1,6 +1,63 @@
-@import url("https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&display=swap");
+:root {
+	--bg: #fbf8f3;
+	--surface: #ffffff;
+	--text: #1f2a2e;
+	--muted: #4b5a5f;
+	--line: #e7e1d7;
+	--accent: #0f766e;
+	--accent-soft: #e3f3f0;
+	--accent-2: #9a4a07;
+	--accent-2-soft: #fbefdf;
+	--radius: 20px;
+	color-scheme: light;
+}
 
-html,
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
 body {
-	font-family: "LINE Seed JP", sans-serif;
+	margin: 0;
+	background: var(--bg);
+	color: var(--text);
+	font-family: "LINE Seed JP", "Hiragino Sans", "Noto Sans JP", sans-serif;
+	font-size: 16px;
+	line-height: 1.8;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd {
+	margin: 0;
+}
+
+ul,
+ol {
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	color: inherit;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+:focus-visible {
+	outline: 3px solid var(--accent);
+	outline-offset: 3px;
 }

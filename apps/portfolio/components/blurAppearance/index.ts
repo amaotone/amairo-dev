@@ -1,4 +1,4 @@
-import { keyframes } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 
 const blurAnime = keyframes`
   from {
@@ -13,5 +13,5 @@ const blurAnime = keyframes`
 `;
 
 export const blurAppearance = {
-  animation: `1s ${blurAnime}`,
+	animation: `1s ${blurAnime}`,
 };

@@ -13,5 +13,5 @@ const blurAnime = keyframes`
 `;
 
 export const blurAppearance = {
-  animation: `1s ${blurAnime}`,
+	animation: `1s ${blurAnime}`,
 };

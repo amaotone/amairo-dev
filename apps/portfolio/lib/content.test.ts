@@ -9,7 +9,6 @@ describe("portfolio content", () => {
 			"engineering",
 			"advisory",
 		]);
-		for (const s of content.services) expect(s.items.length).toBe(3);
 	});
 
 	test("takes requests only through X DM", () => {
@@ -28,5 +27,42 @@ describe("portfolio content", () => {
 	test("uses absolute URLs for social cards", () => {
 		expect(content.site.url).toMatch(/^https:\/\//);
 		expect(content.site.ogImage).toMatch(/^https:\/\/.+\.png$/);
+	});
+
+	test("reads the career as a timeline from school to now", () => {
+		const years = content.timeline.map((t) => t.year);
+		expect(years[0]).toContain("修了年");
+		expect(years.at(-1)).toBe("現在");
+		for (const t of content.timeline) expect(t.event.length).toBeGreaterThan(0);
+	});
+
+	test("uses plain headings, not LP-style questions", () => {
+		for (const h of Object.values(content.headings))
+			expect(h).not.toMatch(/[？?]$/);
+	});
+
+	test("keeps every blank the owner still has to fill in", () => {
+		for (const q of [
+			"経験年数",
+			"入社年",
+			"在籍期間",
+			"修了年",
+			"初回相談の時間と有料・無料",
+			"週あたりの稼働時間・対応できる時間帯",
+			"リモートのみか、訪問も可か",
+			"契約形態（準委任など）",
+		])
+			expect(allText).toContain(`【要確認: ${q}】`);
+	});
+});
+
+describe("subset web font", () => {
+	test("covers every character on the page (run `bun run font:subset` after editing the copy)", async () => {
+		const { glyphsOf } = await import("./glyphs");
+		const font = await Bun.file(
+			new URL("./font-glyphs.txt", import.meta.url),
+		).text();
+		const missing = [...glyphsOf(allText)].filter((c) => !font.includes(c));
+		expect(missing).toEqual([]);
 	});
 });

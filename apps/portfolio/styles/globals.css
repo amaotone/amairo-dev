@@ -1,14 +1,23 @@
+/* Zen Kaku Gothic New (SIL OFL 1.1), cut down to the page's characters by scripts/subset-font.ts */
+@font-face {
+	font-family: "Zen Kaku Gothic New";
+	src: url("/fonts/zen-kaku-400.woff2") format("woff2");
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Zen Kaku Gothic New";
+	src: url("/fonts/zen-kaku-700.woff2") format("woff2");
+	font-weight: 700;
+	font-display: swap;
+}
+
 :root {
-	--bg: #fbf8f3;
-	--surface: #ffffff;
-	--text: #1f2a2e;
-	--muted: #4b5a5f;
-	--line: #e7e1d7;
-	--accent: #0f766e;
-	--accent-soft: #e3f3f0;
-	--accent-2: #9a4a07;
-	--accent-2-soft: #fbefdf;
-	--radius: 20px;
+	--paper: #fcfcfa;
+	--ink: #1d1d1b;
+	--gray: #66655f;
+	--rule: #e4e3de;
+	--measure: 36em;
 	color-scheme: light;
 }
 
@@ -24,11 +33,12 @@ html {
 
 body {
 	margin: 0;
-	background: var(--bg);
-	color: var(--text);
-	font-family: "LINE Seed JP", "Hiragino Sans", "Noto Sans JP", sans-serif;
-	font-size: 16px;
-	line-height: 1.8;
+	background: var(--paper);
+	color: var(--ink);
+	font-size: 17px;
+	line-height: 1.9;
+	letter-spacing: 0.04em;
+	font-kerning: none;
 }
 
 h1,
@@ -42,22 +52,19 @@ dd {
 	margin: 0;
 }
 
-ul,
-ol {
-	padding: 0;
-	list-style: none;
-}
-
 a {
 	color: inherit;
+	text-decoration-line: underline;
+	text-decoration-color: var(--gray);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.3em;
 }
 
-img {
-	display: block;
-	max-width: 100%;
+a:hover {
+	text-decoration-color: var(--ink);
 }
 
 :focus-visible {
-	outline: 3px solid var(--accent);
+	outline: 2px solid var(--ink);
 	outline-offset: 3px;
 }

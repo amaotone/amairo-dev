@@ -1,6 +1,70 @@
-@import url("https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&display=swap");
+/* Zen Kaku Gothic New (SIL OFL 1.1), cut down to the page's characters by scripts/subset-font.ts */
+@font-face {
+	font-family: "Zen Kaku Gothic New";
+	src: url("/fonts/zen-kaku-400.woff2") format("woff2");
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Zen Kaku Gothic New";
+	src: url("/fonts/zen-kaku-700.woff2") format("woff2");
+	font-weight: 700;
+	font-display: swap;
+}
 
-html,
+:root {
+	--paper: #fcfcfa;
+	--ink: #1d1d1b;
+	--gray: #66655f;
+	--rule: #e4e3de;
+	--measure: 36em;
+	color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
 body {
-	font-family: "LINE Seed JP", sans-serif;
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-size: 17px;
+	line-height: 1.9;
+	letter-spacing: 0.04em;
+	font-kerning: none;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd {
+	margin: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration-line: underline;
+	text-decoration-color: var(--gray);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.3em;
+}
+
+a:hover {
+	text-decoration-color: var(--ink);
+}
+
+:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 3px;
 }

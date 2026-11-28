@@ -1,4 +1,5 @@
-import { Avatar, Box, keyframes } from "@chakra-ui/react";
+import { Avatar, Box } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 
 interface Props {
   name: string;
